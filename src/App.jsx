@@ -25,6 +25,14 @@ import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
 import AboutUs from './pages/AboutUs';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
+import Services     from "./Services";
+import ERP          from "./ERP";
+import CRM          from "./CRM";
+import HR           from "./HR";
+import Construction from "./Construction";
+import AIAnalytics  from "./AIAnalytics";
+import EInvoicing   from "./EInvoicing";
+import Contact      from "./Contact";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -376,14 +384,18 @@ function SharedLayout() {
                 <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-red-600 group-hover:w-full transition-all duration-400" />
               </li>
             ))}
-            <li className={`relative group cursor-pointer transition-colors duration-300 ${scrollY > 60 ? 'text-[#0D1B2A]/70 hover:text-[#0D1B2A]' : 'text-white/80 hover:text-white'}`}>
-              <a href="/#services-section">{t.services}</a>
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-red-600 group-hover:w-full transition-all duration-400" />
-            </li>
-            <li className={`relative group cursor-pointer transition-colors duration-300 ${scrollY > 60 ? 'text-[#0D1B2A]/70 hover:text-[#0D1B2A]' : 'text-white/80 hover:text-white'}`}>
-              <a href="/#contact-section">{t.contact}</a>
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-red-600 group-hover:w-full transition-all duration-400" />
-            </li>
+            <li className={`relative group cursor-pointer transition-colors duration-300 ${
+  scrollY > 60 ? 'text-[#0D1B2A]/70 hover:text-[#0D1B2A]' : 'text-white/80 hover:text-white'
+}`}>
+  <Link to="/services">{t.services}</Link>
+  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-red-600 group-hover:w-full transition-all duration-400" />
+</li>
+<li className={`relative group cursor-pointer transition-colors duration-300 ${
+  scrollY > 60 ? 'text-[#0D1B2A]/70 hover:text-[#0D1B2A]' : 'text-white/80 hover:text-white'
+}`}>
+  <Link to="/contact">{t.contact}</Link>
+  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-red-600 group-hover:w-full transition-all duration-400" />
+</li>
 
             {/* Language toggle */}
             <li className="relative">
@@ -460,8 +472,22 @@ function SharedLayout() {
                     {label}
                   </Link>
                 ))}
-                <a href="/#services-section" className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors py-1" style={{ fontFamily: FONT_NAV }} onClick={() => setIsMenuOpen(false)}>{t.services}</a>
-                <a href="/#contact-section"  className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors py-1" style={{ fontFamily: FONT_NAV }} onClick={() => setIsMenuOpen(false)}>{t.contact}</a>
+<Link
+  to="/services"
+  className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors py-1"
+  style={{ fontFamily: FONT_NAV }}
+  onClick={() => setIsMenuOpen(false)}
+>
+  {t.services}
+</Link>
+<Link
+  to="/contact"
+  className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors py-1"
+  style={{ fontFamily: FONT_NAV }}
+  onClick={() => setIsMenuOpen(false)}
+>
+  {t.contact}
+</Link>
                 <div className="flex gap-2 pt-1">
                   {[['en', 'English'], ['ar', '\u0627\u0644\u0639\u0631\u0628\u064a\u0629']].map(([code, label]) => (
                     <button
@@ -1000,15 +1026,21 @@ function HomePage() {
 // ─── ROOT APP ─────────────────────────────────────────────────────────────────
 export default function App() {
   return (
-    <BrowserRouter>
       <Routes>
         <Route element={<SharedLayout />}>
           <Route path="/"            element={<HomePage />} />
           <Route path="/about"       element={<AboutUs />} />
           <Route path="/products"    element={<Products />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/services"element={<Services />} />
+          <Route path="/services/erp"              element={<ERP />} />
+<Route path="/services/crm"              element={<CRM />} />
+<Route path="/services/hr"               element={<HR />} />
+<Route path="/services/construction"     element={<Construction />} />
+<Route path="/services/ai-and-analytics" element={<AIAnalytics />} />
+<Route path="/services/e-invoicing"      element={<EInvoicing />} />
+<Route path="/contact"                   element={<Contact />} />
         </Route>
       </Routes>
-    </BrowserRouter>
   );
 }
