@@ -9,11 +9,11 @@ import products from "../data/productsData";
 import { FaWhatsapp } from "react-icons/fa";
 import { useEffect, useRef } from "react";
 
-// ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
-const F_DISPLAY = '"Clash Display", "Syne", system-ui, sans-serif';
-const F_HEADING = '"Clash Display", "Syne", system-ui, sans-serif';
-const F_LABEL   = '"Clash Display", "Syne", system-ui, sans-serif';
-const F_BODY    = '"Syne", system-ui, sans-serif';
+// ─── DESIGN TOKENS — matches HomePage font system ─────────────────────────────
+const F_DISPLAY = '"DM Sans", "Segoe UI", system-ui, sans-serif';
+const F_HEADING = '"DM Sans", "Segoe UI", system-ui, sans-serif';
+const F_LABEL   = '"DM Sans", "Segoe UI", system-ui, sans-serif';
+const F_BODY    = '"DM Sans", "Segoe UI", system-ui, sans-serif';
 
 const C = {
   ink:    "#07101C",
@@ -59,7 +59,6 @@ function ProductDetails() {
     </div>
   );
 
-  // ── DATA (unchanged) ──────────────────────────────────────────────────────
   const features = [
     "24/7 Technical Support",
     "5 Year Warranty",
@@ -150,32 +149,37 @@ function ProductDetails() {
 
             {/* Title */}
             <div className="overflow-hidden">
-              <motion.h1 className="block font-black leading-[0.95]"
-  style={{
-    fontFamily: F_DISPLAY,
-    fontSize: "clamp(2rem, 5vw, 4rem)",
-    color: C.white,
-    letterSpacing: "-0.02em"
-  }}
->
-  {product.title}
-</motion.h1>
+              <motion.h1
+                className="block font-bold leading-[1.04]"
+                style={{
+                  fontFamily: F_DISPLAY,
+                  fontSize: "clamp(2.2rem, 5.2vw, 4rem)",
+                  color: C.white,
+                  letterSpacing: "-0.015em",
+                }}
+                initial={{ y: 70, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1.05, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {product.title}
+              </motion.h1>
             </div>
 
             {/* Hero description */}
-            <motion.p className="text-sm leading-[2.1] max-w-xl"
-              style={{ fontFamily: F_BODY, color: "rgba(255,255,255,0.55)" }}
+            <motion.p
+              className="text-sm leading-relaxed max-w-xl font-light"
+              style={{ fontFamily: F_BODY, color: "rgba(255,255,255,0.48)" }}
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}>
               {product.heroText}
             </motion.p>
 
-            {/* CTA — same href + buttonText */}
+            {/* CTA */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.56 }}>
               <a href="https://wa.me/966535141447" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 text-white font-semibold text-[11px] px-8 py-4 tracking-[0.2em] uppercase transition-all duration-400"
-                style={{ fontFamily: F_LABEL, background: C.red }}
+                className="inline-flex items-center gap-3 text-white font-semibold text-[11px] px-7 py-3 rounded-full tracking-[0.18em] uppercase transition-all duration-400"
+                style={{ fontFamily: F_LABEL, background: C.red, boxShadow: `0 8px 24px ${C.red}40` }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = C.redDk; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = C.red; }}>
                 <FaWhatsapp className="w-4 h-4" />
@@ -187,20 +191,19 @@ function ProductDetails() {
 
         {/* Scroll pulse */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
-          <motion.div className="w-px h-10 bg-gradient-to-b from-white/20 to-transparent"
+          <motion.div className="w-px h-8 bg-gradient-to-b from-white/20 to-transparent"
             animate={{ scaleY: [1, 0.4, 1], opacity: [0.6, 0.2, 0.6] }}
-            transition={{ duration: 2, repeat: Infinity }} />
-          <span className="text-white/20 text-[9px] uppercase tracking-[0.3em]"
+            transition={{ duration: 1.8, repeat: Infinity }} />
+          <span className="text-white/22 text-[9px] uppercase tracking-[0.25em] font-medium"
             style={{ fontFamily: F_LABEL }}>Scroll</span>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          SECTION 2 · ABOUT SERVICE  (navy bg)
+          SECTION 2 · ABOUT SERVICE
       ══════════════════════════════════════════════════════════════════════ */}
       <section className="relative py-16 md:py-20 overflow-hidden" style={{ background: C.navy }}>
 
-        {/* Subtle grid */}
         <div className="absolute inset-0 opacity-[0.025]"
           style={{
             backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px)",
@@ -214,12 +217,11 @@ function ProductDetails() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="grid lg:grid-cols-2 gap-16 items-stretch">
 
-            {/* Left — image with floating quick-specs badge */}
+            {/* Left — image */}
             <motion.div className="relative"
               initial={{ opacity: 0, x: -32 }} whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}>
 
-              {/* Corner frames */}
               <div className="absolute -top-4 -left-4 w-14 h-14 border-t border-l z-20 pointer-events-none"
                 style={{ borderColor: `${C.red}70` }} />
               <div className="absolute -bottom-4 -right-4 w-14 h-14 border-b border-r z-20 pointer-events-none"
@@ -232,7 +234,6 @@ function ProductDetails() {
                   style={{ filter: "grayscale(12%) contrast(1.05)" }} />
                 <div className="absolute inset-0"
                   style={{ background: `linear-gradient(to top, ${C.navy}CC 0%, transparent 55%)` }} />
-                {/* Red top bar */}
                 <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: C.red }} />
               </div>
 
@@ -248,7 +249,7 @@ function ProductDetails() {
                     style={{ borderColor: "rgba(255,255,255,0.06)" }}>
                     <span className="text-[10px] font-semibold"
                       style={{ fontFamily: F_LABEL, color: "rgba(255,255,255,0.38)" }}>{s.label}</span>
-                    <span className="text-[11px] font-black text-white"
+                    <span className="text-[11px] font-semibold text-white"
                       style={{ fontFamily: F_HEADING }}>{s.value}</span>
                   </div>
                 ))}
@@ -256,15 +257,14 @@ function ProductDetails() {
               </motion.div>
             </motion.div>
 
-            {/* Right — text content (same data as original) */}
+            {/* Right — text */}
             <motion.div className="space-y-7 lg:pl-4 flex flex-col justify-center"
               initial={{ opacity: 0, x: 32 }} whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}>
 
               <SectionLabel light>About This System</SectionLabel>
 
-              {/* sectionTitle split on "|" — same as original */}
-              <h2 className="font-black leading-[1.0]"
+              <h2 className="font-bold leading-tight"
                 style={{ fontFamily: F_HEADING, fontSize: "clamp(1.6rem, 3vw, 2.6rem)", letterSpacing: "-0.01em" }}>
                 <span style={{ color: C.white }}>
                   {product.sectionTitle?.split("|")[0]}
@@ -274,16 +274,15 @@ function ProductDetails() {
                 </span>
               </h2>
 
-              <p className="text-sm leading-[2.1]"
-                style={{ fontFamily: F_BODY, color: "rgba(255,255,255,0.52)" }}>
+              <p className="text-sm leading-relaxed font-light"
+                style={{ fontFamily: F_BODY, color: "rgba(255,255,255,0.48)" }}>
                 {product.description || "In a connected world, your network is only as strong as its physical infrastructure. We provide structured cabling and ELV solutions that ensure seamless data transfer, minimal downtime, and future scalability for modern businesses."}
               </p>
 
-              {/* Key features — same slice(0,4) as original */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 {features.slice(0, 4).map((feature, index) => (
                   <motion.div key={index}
-                    className="flex items-center gap-3 px-4 py-3"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg"
                     style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
                     initial={{ opacity: 0, x: 14 }} whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.05 * index }}>
@@ -299,7 +298,7 @@ function ProductDetails() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          SECTION 4 · SPECIFICATIONS  (navy bg)
+          SECTION 4 · SPECIFICATIONS
       ══════════════════════════════════════════════════════════════════════ */}
       <section className="relative py-16 md:py-20 overflow-hidden" style={{ background: C.navy }}>
 
@@ -319,19 +318,19 @@ function ProductDetails() {
               initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.8 }}>
               <SectionLabel light>Technical Specifications</SectionLabel>
-              <h2 className="font-black leading-[1.0] mb-6"
+              <h2 className="font-bold leading-tight mb-6"
                 style={{ fontFamily: F_HEADING, fontSize: "clamp(1.8rem, 3vw, 2.6rem)", color: C.white, letterSpacing: "-0.015em" }}>
                 Precision{" "}
                 <span style={{ color: C.red }}>Engineered</span>
               </h2>
-              <p className="text-sm leading-[2]"
+              <p className="text-sm leading-relaxed font-light"
                 style={{ fontFamily: F_BODY, color: "rgba(255,255,255,0.42)" }}>
                 Every system we deploy meets the highest international standards. These specifications represent our baseline — custom configurations are available on request.
               </p>
               <div className="mt-10">
                 <a href="https://wa.me/966535141447" target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 font-semibold text-[11px] px-8 py-4 tracking-[0.2em] uppercase transition-all duration-400"
-                  style={{ fontFamily: F_LABEL, background: C.red, color: C.white }}
+                  className="inline-flex items-center gap-3 font-semibold text-[11px] px-7 py-3 rounded-full tracking-[0.18em] uppercase transition-all duration-400"
+                  style={{ fontFamily: F_LABEL, background: C.red, color: C.white, boxShadow: `0 6px 20px ${C.red}38` }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = C.redDk; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = C.red; }}>
                   <FaWhatsapp className="w-4 h-4" />
@@ -358,7 +357,7 @@ function ProductDetails() {
                       {spec.label}
                     </span>
                   </div>
-                  <span className="font-black text-sm px-4 py-1.5"
+                  <span className="font-bold text-sm px-4 py-1.5 rounded-full"
                     style={{ fontFamily: F_HEADING, background: `${C.red}15`, border: `1px solid ${C.red}30`, color: "#fca5a5" }}>
                     {spec.value}
                   </span>

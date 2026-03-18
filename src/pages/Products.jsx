@@ -5,11 +5,11 @@ import { useRef } from "react";
 import heroImage from "../assets/elv.jpg";
 import products from "../data/productsData";
 
-// ─── TOKENS ───────────────────────────────────────────────────────────────────
-const F_DISPLAY = '"Clash Display", "Syne", system-ui, sans-serif';
-const F_HEADING = '"Clash Display", "Syne", system-ui, sans-serif';
-const F_LABEL   = '"Clash Display", "Syne", system-ui, sans-serif';
-const F_BODY    = '"Syne", system-ui, sans-serif';
+// ─── TOKENS — matches HomePage font system ────────────────────────────────────
+const F_DISPLAY = '"DM Sans", "Segoe UI", system-ui, sans-serif';
+const F_HEADING = '"DM Sans", "Segoe UI", system-ui, sans-serif';
+const F_LABEL   = '"DM Sans", "Segoe UI", system-ui, sans-serif';
+const F_BODY    = '"DM Sans", "Segoe UI", system-ui, sans-serif';
 
 const C = {
   ink:    "#07101C",
@@ -106,19 +106,14 @@ function CinematicCard({ product, index }) {
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               style={{ filter: "grayscale(12%) contrast(1.05) brightness(0.88)" }}
             />
-            {/* Dark scrim so text on top is always readable */}
             <div className="absolute inset-0"
               style={{ background: `linear-gradient(to top, ${C.navyLt} 0%, ${C.navyLt}80 30%, transparent 70%)` }} />
-
-            {/* Accent colour tint on hover */}
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{ background: `linear-gradient(135deg, ${accent}22 0%, transparent 55%)` }}
             />
-
-            {/* Giant background number — always faintly visible, no guessing */}
             <div
-              className="absolute -bottom-4 -right-3 font-black leading-none select-none pointer-events-none"
+              className="absolute -bottom-4 -right-3 font-bold leading-none select-none pointer-events-none"
               style={{
                 fontFamily: F_DISPLAY,
                 fontSize: "7.5rem",
@@ -136,7 +131,7 @@ function CinematicCard({ product, index }) {
             {/* Number + accent dot row */}
             <div className="flex items-center gap-3">
               <span
-                className="font-black text-[11px] tracking-[0.22em]"
+                className="font-semibold text-[11px] tracking-[0.22em]"
                 style={{ fontFamily: F_LABEL, color: accent }}
               >
                 {num}
@@ -151,9 +146,9 @@ function CinematicCard({ product, index }) {
               />
             </div>
 
-            {/* Title — large, high contrast, always readable */}
+            {/* Title */}
             <h3
-              className="font-black leading-tight"
+              className="font-semibold leading-tight"
               style={{
                 fontFamily: F_HEADING,
                 fontSize: "clamp(1.05rem, 1.8vw, 1.25rem)",
@@ -164,7 +159,6 @@ function CinematicCard({ product, index }) {
               {product.title}
             </h3>
 
-            {/* Spacer */}
             <div className="flex-1" />
 
             {/* CTA row */}
@@ -269,8 +263,13 @@ function Products() {
                 ].map((line, i) => (
                   <div key={i} className="overflow-hidden">
                     <motion.h1
-                      className="block font-black leading-[0.9]"
-                      style={{ fontFamily: F_DISPLAY, fontSize: "clamp(2.8rem, 6vw, 5.5rem)", color: line.color, letterSpacing: "-0.02em" }}
+                      className="block font-bold leading-[1.04]"
+                      style={{
+                        fontFamily: F_DISPLAY,
+                        fontSize: "clamp(2.2rem, 5.2vw, 4rem)",
+                        color: line.color,
+                        letterSpacing: "-0.015em",
+                      }}
                       initial={{ y: 110, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ duration: 1.05, delay: 0.1 + i * 0.13, ease: [0.16, 1, 0.3, 1] }}>
@@ -295,8 +294,8 @@ function Products() {
                 transition={{ duration: 0.6, delay: 0.8 }}>
                 {stats.map((s, i) => (
                   <div key={i}>
-                    <div className="font-black text-white leading-none"
-                      style={{ fontFamily: F_DISPLAY, fontSize: "2.5rem" }}>{s.value}</div>
+                    <div className="font-bold text-white leading-none"
+                      style={{ fontFamily: F_DISPLAY, fontSize: "2.2rem" }}>{s.value}</div>
                     <div className="text-[10px] uppercase tracking-[0.28em] mt-2 font-semibold"
                       style={{ fontFamily: F_LABEL, color: "rgba(255,255,255,0.30)" }}>{s.label}</div>
                   </div>
@@ -308,15 +307,15 @@ function Products() {
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.94 }}>
                 <MagneticButton href="#portfolio">
-                  <span className="inline-flex items-center gap-3 text-white text-[11px] font-semibold px-8 py-4 tracking-[0.2em] uppercase transition-all duration-400"
-                    style={{ fontFamily: F_LABEL, background: C.red }}
+                  <span className="inline-flex items-center gap-3 text-white text-[11px] font-semibold px-7 py-3 rounded-full tracking-[0.18em] uppercase transition-all duration-400"
+                    style={{ fontFamily: F_LABEL, background: C.red, boxShadow: `0 8px 24px ${C.red}40` }}
                     onMouseEnter={(e) => { e.currentTarget.style.background = C.redDk; }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = C.red; }}>
                     View Portfolio <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
                 </MagneticButton>
-                <MagneticButton href="#">
-                  <span className="inline-flex items-center gap-3 text-[11px] font-semibold px-8 py-4 tracking-[0.2em] uppercase transition-all duration-400"
+                <MagneticButton href="https://wa.me/966">
+                  <span className="inline-flex items-center gap-3 text-[11px] font-semibold px-7 py-3 rounded-full tracking-[0.18em] uppercase transition-all duration-400"
                     style={{ fontFamily: F_LABEL, color: "rgba(255,255,255,0.50)", border: "1px solid rgba(255,255,255,0.16)" }}
                     onMouseEnter={(e) => { e.currentTarget.style.color = C.white; e.currentTarget.style.borderColor = "rgba(255,255,255,0.40)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.50)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.16)"; }}>
@@ -331,14 +330,13 @@ function Products() {
               initial={{ opacity: 0, x: 36 }} animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}>
 
-              {/* Mini product preview cards */}
               {products.slice(0, 4).map((p, i) => (
                 <motion.div key={p.id}
                   className="flex items-center gap-4 px-4 py-3"
                   style={{ background: "rgba(255,255,255,0.03)", borderLeft: `3px solid ${ACCENTS[i]}` }}
                   initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6 + i * 0.1 }}>
-                  <span className="font-black text-[11px]"
+                  <span className="font-semibold text-[11px]"
                     style={{ fontFamily: F_LABEL, color: ACCENTS[i], minWidth: "1.5rem" }}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -349,7 +347,6 @@ function Products() {
                 </motion.div>
               ))}
 
-              {/* More indicator */}
               <div className="flex items-center gap-3 px-4 py-3"
                 style={{ background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.08)" }}>
                 <span className="text-[11px] font-semibold"
@@ -377,14 +374,12 @@ function Products() {
       ══════════════════════════════════════════════════════════ */}
       <section id="portfolio" className="relative py-28 md:py-36 overflow-hidden" style={{ background: C.navy }}>
 
-        {/* Subtle grid texture */}
         <div className="absolute inset-0 opacity-[0.025]"
           style={{
             backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px)",
             backgroundSize: "54px 54px",
           }} />
 
-        {/* Coloured ambient glows matching accent colours */}
         <div className="absolute top-0 left-0 w-[35vw] h-[35vw] rounded-full pointer-events-none opacity-[0.05]"
           style={{ background: `radial-gradient(circle, ${ACCENTS[0]}, transparent 70%)` }} />
         <div className="absolute bottom-0 right-0 w-[30vw] h-[30vw] rounded-full pointer-events-none opacity-[0.05]"
@@ -397,8 +392,8 @@ function Products() {
             <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.8 }}>
               <SectionLabel light>Our Portfolio</SectionLabel>
-              <h2 className="font-black leading-[1.0]"
-                style={{ fontFamily: F_HEADING, fontSize: "clamp(2.8rem, 6vw, 5.5rem)", color: C.white }}>
+              <h2 className="font-bold leading-[1.04]"
+                style={{ fontFamily: F_HEADING, fontSize: "clamp(2.2rem, 5.2vw, 4rem)", color: C.white }}>
                 ELV Systems{" "}
                 <span style={{ color: C.red }}>&amp; Solutions</span>
               </h2>
@@ -425,8 +420,8 @@ function Products() {
               style={{ fontFamily: F_LABEL, color: "rgba(255,255,255,0.28)" }}>
               End-to-end ELV design, supply and implementation
             </p>
-            <MagneticButton href="#">
-              <span className="inline-flex items-center gap-4 font-semibold text-[11px] uppercase tracking-[0.22em] px-8 py-4 transition-all duration-400"
+            <MagneticButton href="https://wa.me/966535141447">
+              <span className="inline-flex items-center gap-4 font-semibold text-[11px] uppercase tracking-[0.18em] px-7 py-3 rounded-full transition-all duration-400"
                 style={{ fontFamily: F_LABEL, color: C.white, border: "1px solid rgba(255,255,255,0.20)" }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = C.red; e.currentTarget.style.borderColor = C.red; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.20)"; }}>
