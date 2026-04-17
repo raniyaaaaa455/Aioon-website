@@ -46,15 +46,6 @@ function Contact() {
     }
   };
 
-  // Generate animated stars
-  const stars = Array.from({ length: 60 }).map((_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    delay: Math.random() * 5,
-    duration: 2 + Math.random() * 4,
-    size: Math.random() * 1.5 + 0.5
-  }));
 
   const socialMedia = [
     { icon: FaFacebookF, color: "from-[#dc2626] to-[#ef4444]", label: "Facebook", url: "#" },
@@ -64,8 +55,6 @@ function Contact() {
   ];
 
   // WhatsApp number - replace with your actual business WhatsApp number
-  const whatsappNumber = "+966535141447";
-  const whatsappMessage = "Hello! I'm interested in your services.";
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -82,33 +71,7 @@ function Contact() {
 
       {/* Floating WhatsApp Icon - REMOVED FROM HERE */}
 
-      {/* Animated Stars */}
-      <div className="absolute inset-0 overflow-hidden z-0">
-        {stars.map((star) => (
-          <motion.div
-            key={star.id}
-            className="absolute rounded-full bg-white"
-            style={{
-              left: `${star.x}%`,
-              top: `${star.y}%`,
-              width: `${star.size}px`,
-              height: `${star.size}px`,
-              boxShadow: '0 0 4px 1px rgba(255, 255, 255, 0.3)'
-            }}
-            animate={{
-              opacity: [0, 0.6, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: star.duration,
-              repeat: Infinity,
-              delay: star.delay,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
-
+      
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Contact Us Heading Section */}
@@ -234,7 +197,7 @@ function Contact() {
                     value={form.name}
                     onChange={handleChange}
                     placeholder="Your name"
-                    className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:border-[#dc2626] text-white placeholder-white/50 transition-all duration-300"
+                    className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:border-[#dc2626] text-white placeholder-white/50 transition-all duration-300 caret-red-500"
                     required
                   />
                 </div>
@@ -408,29 +371,6 @@ function Contact() {
                   </div>
                 </div>
               </div>
-
-              {/* WhatsApp Icon positioned at bottom right outside the box */}
-              <motion.a
-                href={`https://wa.me/${whatsappNumber.replace(/\+/g, '')}?text=${encodeURIComponent(whatsappMessage)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute -bottom-16 -right-1 z-20 group"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-[#25D366] opacity-20 group-hover:opacity-30 blur-xl rounded-full"></div>
-                {/* Icon container */}
-                <div className="relative bg-gradient-to-br from-[#25D366] to-[#128C7E] p-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                  <FaWhatsapp className="w-6 h-6 text-white" />
-                </div>
-                {/* Tooltip on hover */}
-                <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-800 text-white text-sm py-2 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                  Chat on WhatsApp
-                </span>
-              </motion.a>
             </div>
           </div>
         </motion.div>

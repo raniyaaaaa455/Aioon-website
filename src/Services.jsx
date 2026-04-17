@@ -1,4 +1,5 @@
 // src/Services.jsx
+import heroVideo from "./assets/hero-video.mp4";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FiArrowRight, FiCheckCircle, FiUsers, FiPackage, FiBarChart2,
@@ -26,7 +27,7 @@ function FadeUp({ children, delay = 0, className = "" }) {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}>
+      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}>
       {children}
     </motion.div>
   );
@@ -40,14 +41,9 @@ function AnimatedHeading() {
 
   return (
     <div ref={ref}>
-      {/* Red rule above */}
-      <motion.div
-        className="mx-auto mb-5 h-px bg-gradient-to-r from-transparent via-[#dc2626] to-transparent"
-        initial={{ width: 0 }} animate={isInView ? { width: 120 } : { width: 0 }}
-        transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-      />
+      
 
-      <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 flex flex-wrap justify-center gap-x-4 gap-y-1">
+      <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 flex flex-wrap justify-center gap-x-4 gap-y-1 mt-0">
         {words.map((word, i) => (
           <span key={i} className="overflow-hidden inline-block" style={{ paddingBottom: "0.05em" }}>
             <motion.span className="inline-block"
@@ -101,13 +97,7 @@ function Services() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 180, damping: 28 });
 
-  const stars = useRef(
-    Array.from({ length: 50 }).map((_, i) => ({
-      id: i, x: Math.random() * 100, y: Math.random() * 100,
-      delay: Math.random() * 6, duration: 2.5 + Math.random() * 4,
-      size: Math.random() * 2 + 0.5,
-    }))
-  ).current;
+ 
 
   // ==========================================
   // ALL SERVICES DATA - UNCHANGED
@@ -229,16 +219,7 @@ function Services() {
       <div className="absolute inset-0 pointer-events-none opacity-[0.018]"
         style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
 
-      {/* Stars */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {stars.map(star => (
-          <motion.div key={star.id} className="absolute rounded-full bg-white"
-            style={{ left: `${star.x}%`, top: `${star.y}%`, width: `${star.size}px`, height: `${star.size}px` }}
-            animate={{ opacity: [0, 0.5, 0], scale: [0, 1, 0] }}
-            transition={{ duration: star.duration, repeat: Infinity, delay: star.delay, ease: "easeInOut" }}
-          />
-        ))}
-      </div>
+      
 
       {/* Spinning rings — desktop only */}
       <div className="hidden md:block absolute top-[2%] right-[3%] w-72 h-72 opacity-[0.05] pointer-events-none" style={{ animation: "spin-slow 22s linear infinite" }}>
@@ -252,23 +233,44 @@ function Services() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
 
         {/* ── Hero Heading ── */}
-        <div className="max-w-4xl mx-auto text-center mb-20">
-          <AnimatedHeading />
-        </div>
+        {/* ── Hero Section with Background Video ── */}
+<div className="relative h-screen w-full flex items-center justify-center text-center overflow-hidden">
+
+  {/* 🎥 Background Video */}
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="absolute inset-0 w-full h-full object-cover"
+  >
+    <source src={heroVideo} type="video/mp4" />
+  </video>
+
+  {/* 🌑 Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-[#06080f]" />
+
+  {/* ✨ Content */}
+  <div className="relative z-10 px-4 max-w-4xl -mt-24">
+    <AnimatedHeading />
+  </div>
+
+</div>
 
         {/* ── Service Cards ── */}
+        
         <div className="space-y-8 mx-4">
           {services.map((service, index) => (
-            <FadeUp key={service.id} delay={0.05}>
-              <div className="group relative rounded-3xl overflow-hidden">
-                {/* Card glass background */}
-                <div className="absolute inset-0 bg-white/[0.04] border border-white/10 rounded-3xl group-hover:border-[#dc2626]/30 transition-colors duration-500" />
-
-                {/* Hover glow */}
-                <motion.div
-                  className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(220,38,38,0.07) 0%, transparent 70%)" }}
-                />
+            <motion.div
+  key={service.id}
+  initial={{ opacity: 0, x: index % 2 === 0 ? -120 : 120 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true, amount: 0.15 }}
+  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+>
+  <div className="group relative rounded-3xl overflow-hidden transform transition duration-500 hover:-translate-y-2">
+                
+                
 
                 <div className={`relative flex flex-col ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
 
@@ -280,6 +282,7 @@ function Services() {
                         alt={service.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
+                      
                       {/* Dark overlay so image fits dark theme */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
                       {/* Side fade into card */}
@@ -320,7 +323,7 @@ function Services() {
                   </div>
                 </div>
               </div>
-            </FadeUp>
+          </motion.div>
           ))}
         </div>
 

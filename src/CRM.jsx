@@ -195,13 +195,6 @@ export default function CRM() {
   const rawParallax = useTransform(scrollY, [0, 600], [0, 100]);
   const heroImgY = isMobile ? 0 : rawParallax;
 
-  const stars = useRef(
-    Array.from({ length: 50 }).map((_, i) => ({
-      id: i, x: Math.random() * 100, y: Math.random() * 100,
-      delay: Math.random() * 6, duration: 2.5 + Math.random() * 4,
-      size: Math.random() * 2 + 0.5,
-    }))
-  ).current;
 
   const whatsappNumber = "966535141447";
   const whatsappMessage = "Hello! I'm interested in booking a demo for your CRM solution. Can you please provide more information?";
@@ -247,15 +240,6 @@ export default function CRM() {
       <div className="absolute inset-0 pointer-events-none opacity-[0.018]"
         style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
 
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {stars.map(star => (
-          <motion.div key={star.id} className="absolute rounded-full bg-white"
-            style={{ left: `${star.x}%`, top: `${star.y}%`, width: `${star.size}px`, height: `${star.size}px` }}
-            animate={{ opacity: [0, 0.5, 0], scale: [0, 1, 0] }}
-            transition={{ duration: star.duration, repeat: Infinity, delay: star.delay, ease: "easeInOut" }}
-          />
-        ))}
-      </div>
 
       <div className="hidden md:block absolute top-[4%] right-[4%] w-72 h-72 opacity-[0.05] pointer-events-none" style={{ animation: "spin-slow 22s linear infinite" }}>
         <div className="w-full h-full rounded-full border-2 border-dashed border-[#dc2626]" />
@@ -266,7 +250,7 @@ export default function CRM() {
 
       <div className="relative z-10">
         {/* ── HERO ── */}
-        <div className="relative h-[100vh] max-h-[720px] min-h-[560px] overflow-hidden">
+        <div className="relative h-[100vh] max-h-[760px] min-h-[620px] overflow-hidden">
           <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[65%]">
             <motion.img src={service.imageUrl} alt={service.title}
               className="w-full h-full object-cover" style={{ y: heroImgY }} />
@@ -279,12 +263,12 @@ export default function CRM() {
           />
           <div className="relative z-20 h-full flex flex-col justify-center max-w-6xl mx-auto px-6 lg:px-12">
             <div className="max-w-xl">
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="mb-10">
-                <Link to="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#ef4444] transition-colors group text-sm">
-                  <FiArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform w-4 h-4" />
-                  All Services
-                </Link>
-              </motion.div>
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="mb-10 pt-20">
+  <Link to="/services" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#ef4444] transition-colors group text-sm">
+    <FiArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform w-4 h-4" />
+    All Services
+  </Link>
+</motion.div>
               <div className="flex items-center gap-3 mb-6 overflow-hidden">
                 <motion.span className="h-px bg-gradient-to-r from-[#dc2626] to-[#ef4444]"
                   initial={{ width: 0 }} animate={{ width: 36 }} transition={{ duration: 0.6, delay: 0.3 }} />
@@ -307,7 +291,7 @@ export default function CRM() {
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 1.0 }}
               >{service.description}</motion.p>
-              <motion.div className="flex flex-wrap gap-4"
+              <motion.div className="flex flex-wrap gap-4 mt-6 mb-8"
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
@@ -327,7 +311,7 @@ export default function CRM() {
         </div>
 
         {/* ── Stats ── */}
-        <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-12 -mt-6 mb-24">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-12 mt-4 mb-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {service.stats.map((stat, i) => (
               <FadeUp key={i} delay={i * 0.08}>

@@ -98,9 +98,6 @@ function InfiniteModules({ modules }) {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 rounded-2xl group-hover:border-[#dc2626]/40 transition-colors duration-300" />
             <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-[#dc2626]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute -bottom-4 -right-2 text-[80px] font-black text-white/[0.03] leading-none select-none pointer-events-none">
-              {(index % modules.length) + 1}
-            </div>
             <div className="relative p-7">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#dc2626]/20 to-[#dc2626]/5 flex items-center justify-center text-[#ef4444] mb-5 group-hover:scale-110 group-hover:from-[#dc2626]/30 transition-all duration-200">
                 {module.icon}
@@ -198,14 +195,6 @@ export default function EInvoicing() {
   const rawParallax = useTransform(scrollY, [0, 600], [0, 100]);
   const heroImgY = isMobile ? 0 : rawParallax;
 
-  const stars = useRef(
-    Array.from({ length: 50 }).map((_, i) => ({
-      id: i, x: Math.random() * 100, y: Math.random() * 100,
-      delay: Math.random() * 6, duration: 2.5 + Math.random() * 4,
-      size: Math.random() * 2 + 0.5,
-    }))
-  ).current;
-
   const whatsappNumber = "966535141447";
   const whatsappMessage = "Hello! I'm interested in checking my ZATCA compliance status for your E-Invoicing solution. Can you please provide more information?";
   const handleWhatsAppClick = () =>
@@ -263,17 +252,6 @@ export default function EInvoicing() {
       <div className="absolute inset-0 pointer-events-none opacity-[0.018]"
         style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
 
-      {/* Stars */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {stars.map(star => (
-          <motion.div key={star.id} className="absolute rounded-full bg-white"
-            style={{ left: `${star.x}%`, top: `${star.y}%`, width: `${star.size}px`, height: `${star.size}px` }}
-            animate={{ opacity: [0, 0.5, 0], scale: [0, 1, 0] }}
-            transition={{ duration: star.duration, repeat: Infinity, delay: star.delay, ease: "easeInOut" }}
-          />
-        ))}
-      </div>
-
       {/* Spinning rings */}
       <div className="hidden md:block absolute top-[4%] right-[4%] w-72 h-72 opacity-[0.05] pointer-events-none" style={{ animation: "spin-slow 22s linear infinite" }}>
         <div className="w-full h-full rounded-full border-2 border-dashed border-[#dc2626]" />
@@ -298,7 +276,7 @@ export default function EInvoicing() {
           <div className="relative z-20 h-full flex flex-col justify-center max-w-6xl mx-auto px-6 lg:px-12">
             <div className="max-w-xl">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="mb-10">
-                <Link to="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#ef4444] transition-colors group text-sm">
+                <Link to="/Services" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#ef4444] transition-colors group text-sm">
                   <FiArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform w-4 h-4" />
                   All Services
                 </Link>
@@ -345,7 +323,7 @@ export default function EInvoicing() {
         </div>
 
         {/* ── Stats ── */}
-        <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-12 -mt-6 mb-24">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-12 mt-4 mb-24">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {service.stats.map((stat, i) => (
               <FadeUp key={i} delay={i * 0.08}>
