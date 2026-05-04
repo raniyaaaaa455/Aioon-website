@@ -44,7 +44,11 @@ function Navbar() {
 
   <Link to="/" className="hover:text-purple-400 transition">Home</Link>
   <Link to="/about" className="hover:text-purple-400 transition">About</Link>
-  <a href="#" className="hover:text-purple-400 transition">Services</a>
+
+  <Link to="/products" className="hover:text-purple-400 transition">
+    ELV Solutions
+  </Link>
+
   <a href="#" className="hover:text-purple-400 transition">Contact</a>
 
   {/* Get Started Button */}
@@ -98,7 +102,9 @@ function Navbar() {
   >
     <Link to="/" onClick={() => setOpen(false)} className="block">Home</Link>
     <Link to="/about" onClick={() => setOpen(false)} className="block">About</Link>
-    <a href="#" className="block">Services</a>
+    <Link to="/products" onClick={() => setOpen(false)} className="block">
+  ELV Solutions
+</Link>
     <a href="#" className="block">Contact</a>
 
     {/* ADD THIS PART */}

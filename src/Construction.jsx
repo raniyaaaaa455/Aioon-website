@@ -7,7 +7,7 @@ import {
 } from "react-icons/fi";
 import { FaRocket, FaRegBuilding, FaHardHat, FaTools, FaTruckLoading, FaWhatsapp } from "react-icons/fa";
 import { motion, useInView, useScroll, useSpring, useMotionValue, useTransform } from "framer-motion";
-import constructionImage from "./assets/construction.jpg";
+import constructionImage from "./assets/construction.jpeg";
 import overviewImg from "./assets/overview.jpg";
 import { Link } from "react-router-dom";
 

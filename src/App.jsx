@@ -14,6 +14,15 @@ import newBanner from './assets/newrobot.png';
 import scalableArchImg from './assets/1.png';
 import aboutImg from './assets/ABOUT.jpg';
 import aiBusinessImg from './assets/AIandBUSINESS.png';
+// ✅ NEW LOCAL SOLUTION IMAGES
+import Attendance from "./assets/Attendance.jpg";
+import Trading from "./assets/Trading.jpg";
+import Hotel from "./assets/Hotel.jpg";
+import Laundry from "./assets/laundry.jpg";
+import Property from "./assets/property.jpg";
+import OdooImg from "./assets/odoo.jpg";
+import whatsappBg from './assets/whatsappimage.jpg';
+
 import { Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 import AboutUs from './pages/AboutUs';
 import Products from './pages/Products';
@@ -52,104 +61,184 @@ const BG_DARK      = '#1A1A1A';
 const BG_DARK2     = '#111111';
 const FOOTER_BG    = '#F2F4F8';
 
-// ─── ELV SOLUTIONS DROPDOWN ITEMS ─────────────────────────────────────────────
-const ELV_DROPDOWN_ITEMS = [
+// ─── FLAG SVG COMPONENTS ──────────────────────────────────────────────────────
+// Proper compact Union Jack — matches the reference screenshot style
+function UKFlag() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 60 30"
+      width="20"
+      height="13"
+      style={{ borderRadius: 2, display: 'block', flexShrink: 0, overflow: 'hidden' }}
+    >
+      <defs>
+        <clipPath id="uk-border">
+          <rect width="60" height="30" rx="2" />
+        </clipPath>
+      </defs>
+      <g clipPath="url(#uk-border)">
+        {/* Blue background */}
+        <rect width="60" height="30" fill="#012169" />
+        {/* White diagonal cross (St Andrew + St Patrick base) */}
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="7" />
+        {/* Red diagonal (St Patrick — offset) */}
+        <path d="M0,0 L60,30" stroke="#C8102E" strokeWidth="4.5"
+          strokeDasharray="60,60" strokeDashoffset="0" />
+        <path d="M60,0 L0,30" stroke="#C8102E" strokeWidth="4.5" />
+        {/* White horizontal + vertical cross (St George base) */}
+        <rect x="0" y="11" width="60" height="8" fill="#fff" />
+        <rect x="26" y="0" width="8" height="30" fill="#fff" />
+        {/* Red horizontal + vertical cross (St George) */}
+        <rect x="0" y="12.5" width="60" height="5" fill="#C8102E" />
+        <rect x="27.5" y="0" width="5" height="30" fill="#C8102E" />
+      </g>
+    </svg>
+  );
+}
+
+// Correct Saudi Arabia flag — green with white Arabic Shahada + two crossed swords
+function SaudiFlagProper() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 30 20"
+      width="20"
+      height="13"
+      style={{ borderRadius: 2, display: 'block', flexShrink: 0, overflow: 'hidden' }}
+    >
+      <defs>
+        <clipPath id="sa-border">
+          <rect width="30" height="20" rx="2" />
+        </clipPath>
+      </defs>
+      <g clipPath="url(#sa-border)">
+        {/* Green background */}
+        <rect width="30" height="20" fill="#006C35" />
+        {/* Arabic Shahada text approximated with SVG path */}
+        <text
+          x="15"
+          y="9.5"
+          textAnchor="middle"
+          fontSize="4.2"
+          fill="white"
+          fontFamily="'Arial Unicode MS', 'Segoe UI', Arial, sans-serif"
+          fontWeight="bold"
+        >
+          لا إله إلا الله
+        </text>
+        {/* Crossed swords — two simple sword shapes crossing */}
+        {/* Sword 1: top-left to bottom-right */}
+        <line x1="8" y1="12" x2="22" y2="17" stroke="white" strokeWidth="0.8" strokeLinecap="round" />
+        <polygon points="8,12 7,11 9,11" fill="white" />
+        <line x1="22" y1="17" x2="21.5" y2="18.2" stroke="white" strokeWidth="0.8" strokeLinecap="round" />
+        {/* Sword 2: top-right to bottom-left */}
+        <line x1="22" y1="12" x2="8" y2="17" stroke="white" strokeWidth="0.8" strokeLinecap="round" />
+        <polygon points="22,12 23,11 21,11" fill="white" />
+        <line x1="8" y1="17" x2="8.5" y2="18.2" stroke="white" strokeWidth="0.8" strokeLinecap="round" />
+        {/* Guard bars for both swords */}
+        <line x1="10.5" y1="13" x2="9.2" y2="14.2" stroke="white" strokeWidth="0.6" strokeLinecap="round" />
+        <line x1="19.5" y1="13" x2="20.8" y2="14.2" stroke="white" strokeWidth="0.6" strokeLinecap="round" />
+      </g>
+    </svg>
+  );
+}
+
+// Keep legacy SaudiFlag alias pointing to the proper one
+function SaudiFlag() {
+  return <SaudiFlagProper />;
+}
+
+// ─── AI AGENTS DROPDOWN ITEMS ─────────────────────────────────────────────────
+const AI_AGENTS_DROPDOWN_ITEMS = [
   {
-    name: 'Passive Networking',
-    shortName: 'Structured Cabling',
-    productId: 1,
-    description: 'Enterprise-grade cabling',
+    name: 'Attendance & HR',
+    solutionId: 'hrms',
+    description: 'AI-powered attendance via WhatsApp',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
-        <rect x="2" y="2" width="6" height="4" rx="1"/><rect x="16" y="2" width="6" height="4" rx="1"/>
-        <rect x="9" y="10" width="6" height="4" rx="1"/><rect x="2" y="18" width="6" height="4" rx="1"/>
-        <rect x="16" y="18" width="6" height="4" rx="1"/>
-        <path d="M5 6v4M19 6v4M12 14v4M5 18v-4M19 18v-4M5 14h14" strokeLinecap="round"/>
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" strokeLinecap="round"/>
       </svg>
     ),
   },
   {
-    name: 'Conferencing',
-    shortName: 'Meeting Hall',
-    productId: 2,
-    description: 'Smart AV solutions',
+    name: 'Trading & Distribution',
+    solutionId: 'trading',
+    description: 'Auto quotations & CRM sync',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4" strokeLinecap="round"/>
-        <circle cx="8" cy="10" r="2"/><circle cx="16" cy="10" r="2"/>
-        <path d="M6 14s1-2 6-2 6 2 6 2" strokeLinecap="round"/>
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0" strokeLinecap="round"/>
       </svg>
     ),
   },
   {
-    name: 'Audio & Visual',
-    shortName: 'Systems',
-    productId: 3,
-    description: 'Professional AV integration',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
-    name: 'CCTV & VMS',
-    shortName: 'Surveillance',
-    productId: 4,
-    description: 'Video management',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
-        <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/>
-        <circle cx="8.5" cy="12" r="2.5" fill="currentColor" opacity="0.3"/>
-      </svg>
-    ),
-  },
-  {
-    name: 'Parking Control',
-    shortName: 'Guidance',
-    productId: 6,
-    description: 'Smart parking',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
-        <rect x="2" y="2" width="20" height="20" rx="3"/>
-        <path d="M9 17V7h5a3 3 0 0 1 0 6H9" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-  },
-  {
-    name: 'Access Control',
-    shortName: 'E Gates',
-    productId: 7,
-    description: 'Biometric access',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
-        <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-        <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
-      </svg>
-    ),
-  },
-  {
-    name: 'SmartHome',
-    shortName: 'Automation',
-    productId: 8,
-    description: 'Home automation',
+    name: 'Hotel & Hospitality',
+    solutionId: 'hotel',
+    description: 'Guest requests via WhatsApp AI',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
-        <circle cx="17" cy="8" r="1.5" fill="currentColor" opacity="0.5"/>
+      </svg>
+    ),
+  },
+  {
+    name: 'Laundry Management',
+    solutionId: 'laundry',
+    description: 'End-to-end laundry automation',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
+        <rect x="2" y="3" width="20" height="18" rx="2"/>
+        <circle cx="12" cy="13" r="4"/>
+        <path d="M5 7h1M8 7h1" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    name: 'Property Management',
+    solutionId: 'property',
+    description: 'Inquiries, maintenance & privacy',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <rect x="9" y="14" width="6" height="8"/>
+      </svg>
+    ),
+  },
+  {
+    name: 'Odoo Implementation',
+    solutionId: 'odoo',
+    description: 'Scalable ERP for your industry',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
+        <rect x="2" y="3" width="8" height="8" rx="1"/>
+        <rect x="14" y="3" width="8" height="8" rx="1"/>
+        <rect x="2" y="13" width="8" height="8" rx="1"/>
+        <rect x="14" y="13" width="8" height="8" rx="1"/>
+      </svg>
+    ),
+  },
+  {
+    name: 'WhatsApp Chatbot',
+    solutionId: 'whatsapp',
+    description: '24/7 AI automation on WhatsApp',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16" height="16">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
       </svg>
     ),
   },
 ];
 
-// ─── SOCIAL ICONS ─────────────────────────────────────────────────────────────
+// ─── SOCIAL ICONS — all hrefs set to '#' ─────────────────────────────────────
 const SOCIALS = [
   {
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/aioon-technologies',
+    href: '#',
     icon: (
       <svg viewBox="0 0 24 24" fill="#0A66C2" width="18" height="18">
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -158,7 +247,7 @@ const SOCIALS = [
   },
   {
     label: 'Facebook',
-    href: 'https://facebook.com/aioon.technologies',
+    href: '#',
     icon: (
       <svg viewBox="0 0 24 24" fill="#1877F2" width="18" height="18">
         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -167,7 +256,7 @@ const SOCIALS = [
   },
   {
     label: 'Instagram',
-    href: 'https://instagram.com/aioon.tech',
+    href: '#',
     icon: (
       <svg viewBox="0 0 24 24" width="18" height="18">
         <defs>
@@ -184,6 +273,12 @@ const SOCIALS = [
     ),
   },
 ];
+
+// ─── WHATSAPP PRE-FILLED MESSAGE ──────────────────────────────────────────────
+const WA_MESSAGE = encodeURIComponent(
+  'Hi *Aioon Technologies,*\n\nI\'m interested in enquire about your *Services.*\n\nNeed to discuss further.'
+);
+const WA_LINK = `https://wa.me/966535141447?text=${WA_MESSAGE}`;
 
 // ─── ANIMATED COUNTER ─────────────────────────────────────────────────────────
 function AnimatedCounter({ target, suffix = '' }) {
@@ -231,7 +326,7 @@ function Marquee({ items }) {
         <motion.div key={i} className="flex gap-8 pr-8 shrink-0"
           animate={{ x: ['0%', '-100%'] }} transition={{ duration: 22, ease: 'linear', repeat: Infinity }}>
           {items.map((item, j) => (
-            <span key={j} className="flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.2em]"
+            <span key={j} className="flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.2em] whitespace-nowrap"
               style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>
               {item} <span className="w-1 h-1 rounded-full inline-block" style={{ background: ACCENT }} />
             </span>
@@ -251,6 +346,7 @@ function AiAgentSolutions() {
   const autoRef = useRef(null);
   const sectionRef = useRef(null);
 
+  // ✅ ALL IMAGES NOW USE LOCAL IMPORTS — NO ONLINE URLs
   const solutions = [
     {
       id: 0,
@@ -261,7 +357,7 @@ function AiAgentSolutions() {
       value: 'Accurate attendance across multiple sites, zero hardware costs, and seamless payroll handoff. HR teams reclaim hours spent chasing records.',
       features: ['WhatsApp Check-In/Out', '6-Layer Security', 'Leave Automation', 'Payroll Integration', 'Location Validation'],
       color: '#0EA5E9',
-      image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=80',
+      image: Attendance,            // ✅ LOCAL
       aiPageId: 'hrms',
     },
     {
@@ -273,7 +369,7 @@ function AiAgentSolutions() {
       value: 'Faster deal cycles, fewer support escalations, and a consistent customer experience that scales without adding headcount.',
       features: ['Auto Quotation', 'Ticket Routing', 'WhatsApp Alerts', 'CRM Sync', 'Approval Workflows'],
       color: ACCENT,
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80',
+      image: Trading,               // ✅ LOCAL
       aiPageId: 'trading',
     },
     {
@@ -285,7 +381,7 @@ function AiAgentSolutions() {
       value: 'Faster response times, higher guest satisfaction scores, and operational coordination that runs itself — so your staff can focus on hospitality.',
       features: ['Guest Request Handling', 'Dept. Notifications', 'Real-Time Tracking', 'Human Handover', 'Feedback Collection'],
       color: '#F59E0B',
-      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80',
+      image: Hotel,                 // ✅ LOCAL
       aiPageId: 'hotel',
     },
     {
@@ -297,7 +393,7 @@ function AiAgentSolutions() {
       value: 'Reduced turnaround time, real-time visibility for managers, and a frictionless customer journey that drives repeat business.',
       features: ['Pickup Requests', 'Route Assignment', 'Stage Alerts', 'Payment Gateway', 'No App Required'],
       color: '#8B5CF6',
-      image: 'https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=1600&q=80',
+      image: Laundry,               // ✅ LOCAL
       aiPageId: 'laundry',
     },
     {
@@ -309,7 +405,7 @@ function AiAgentSolutions() {
       value: 'Centralized communication, faster tenant resolution, and full data privacy compliance — without hiring additional coordinators.',
       features: ['Inquiry Management', 'Privacy Protection', 'Maintenance Routing', 'Tenant Feedback', 'Availability Sync'],
       color: '#10B981',
-      image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1600&q=80',
+      image: Property,              // ✅ LOCAL
       aiPageId: 'property',
     },
     {
@@ -321,8 +417,20 @@ function AiAgentSolutions() {
       value: 'A stable, evolving ERP backbone with dedicated specialists and priority response — so your operations never stall waiting on software.',
       features: ['Enterprise & Community', 'Monthly Support', 'Priority Response', 'Custom Modules', 'KSA Compliance'],
       color: ACCENT,
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80',
+      image: OdooImg,               // ✅ LOCAL
       aiPageId: 'odoo',
+    },
+    {
+      id: 6,
+      tag: 'WhatsApp',
+      label: 'WhatsApp Chatbot',
+      headline: 'Your Business, Automated on WhatsApp 24/7',
+      purpose: 'Enzapps AI Chatbot handles customer queries, qualifies leads, books appointments and closes deals on WhatsApp — without a single human agent.',
+      value: '98% response rate, 3× lead conversion, and a 24/7 sales team that never sleeps. Trusted by 200+ businesses across the GCC.',
+      features: ['AI Conversations', 'Lead Qualification', 'Appointment Booking', 'ERP Integration', 'Bilingual Arabic/English'],
+      color: '#25D366',
+      image: whatsappBg,            // ✅ LOCAL
+      aiPageId: 'whatsapp',
     },
   ];
 
@@ -368,20 +476,20 @@ function AiAgentSolutions() {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden" style={{ background: BG_LIGHT }}>
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-16 pb-10">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-12 sm:pt-16 pb-8 sm:pb-10">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6">
           <div>
-            <h2 className="font-bold leading-[1.08]" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(2rem,4.5vw,3rem)', color: TEXT_PRIMARY }}>
+            <h2 className="font-bold leading-[1.08]" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.6rem,4.5vw,3rem)', color: TEXT_PRIMARY }}>
               Intelligent Agents for<br /><span style={{ color: ACCENT }}>Every Industry</span>
             </h2>
           </div>
           <p className="text-[12px] leading-relaxed max-w-[280px] md:text-right" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>
-            Powered by ENZAPPS and marketed by Aioon —<br />a complete AI-Agent solution for your business.
+            A complete AI-Agent solution for your business.
           </p>
         </div>
       </div>
 
-      <div className="relative w-full overflow-hidden" style={{ height: 'clamp(480px, 68vh, 660px)' }}>
+      <div className="relative w-full overflow-hidden" style={{ height: 'clamp(480px, 70vh, 660px)' }}>
         <AnimatePresence>
           {prev !== null && (
             <motion.div key={`bg-prev-${prev}`} className="absolute inset-0"
@@ -405,8 +513,8 @@ function AiAgentSolutions() {
           style={{ background: `radial-gradient(ellipse at right center, ${sol.color}18 0%, transparent 70%)`, transition: 'background 0.8s ease' }} />
 
         <div className="absolute inset-0 flex items-center">
-          <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full">
-            <div className="grid lg:grid-cols-[1fr_400px] gap-12 items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 w-full">
+            <div className="grid lg:grid-cols-[1fr_400px] gap-8 lg:gap-12 items-center">
               <AnimatePresence mode="wait">
                 <motion.div key={`content-${activeSlide}`}
                   initial={{ opacity: 0, x: -32 }}
@@ -414,7 +522,7 @@ function AiAgentSolutions() {
                   exit={{ opacity: 0, x: 32 }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
 
-                  <div className="flex items-center justify-between mb-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-4 sm:mb-5">
                     <div className="flex items-center gap-3">
                       <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.28em]"
                         style={{ background: `${sol.color}18`, color: sol.color, border: `1px solid ${sol.color}35`, fontFamily: FONT_BADGE }}>
@@ -427,14 +535,14 @@ function AiAgentSolutions() {
                     </div>
                     <div className="flex items-center gap-2">
                       <button onClick={() => handleGo((activeSlide - 1 + solutions.length) % solutions.length)}
-                        className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300"
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300"
                         style={{ background: BG_WHITE, border: `1px solid ${BORDER}`, color: TEXT_SEC, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
                         onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = ACCENT; }}
                         onMouseLeave={e => { e.currentTarget.style.background = BG_WHITE; e.currentTarget.style.color = TEXT_SEC; e.currentTarget.style.borderColor = BORDER; }}>
                         ‹
                       </button>
                       <button onClick={() => handleGo((activeSlide + 1) % solutions.length)}
-                        className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300"
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300"
                         style={{ background: BG_WHITE, border: `1px solid ${BORDER}`, color: TEXT_SEC, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
                         onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = ACCENT; }}
                         onMouseLeave={e => { e.currentTarget.style.background = BG_WHITE; e.currentTarget.style.color = TEXT_SEC; e.currentTarget.style.borderColor = BORDER; }}>
@@ -443,27 +551,27 @@ function AiAgentSolutions() {
                     </div>
                   </div>
 
-                  <h3 className="font-bold leading-[1.1] mb-4"
-                    style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.5rem,3vw,2.4rem)', color: TEXT_PRIMARY }}>
+                  <h3 className="font-bold leading-[1.1] mb-3 sm:mb-4"
+                    style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.2rem,3vw,2.4rem)', color: TEXT_PRIMARY }}>
                     {sol.headline}
                   </h3>
 
-                  <motion.div className="h-[2px] mb-5 rounded-full" style={{ background: `linear-gradient(to right, ${sol.color}, transparent)` }}
+                  <motion.div className="h-[2px] mb-4 sm:mb-5 rounded-full" style={{ background: `linear-gradient(to right, ${sol.color}, transparent)` }}
                     initial={{ width: 0 }} animate={{ width: '40%' }} transition={{ duration: 0.7, delay: 0.2 }} />
 
-                  <div className="mb-4">
+                  <div className="mb-3 sm:mb-4">
                     <div className="text-[9px] font-bold uppercase tracking-[0.22em] mb-1.5" style={{ fontFamily: FONT_BADGE, color: sol.color }}>What it does</div>
-                    <p className="text-[12px] leading-relaxed max-w-lg" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>{sol.purpose}</p>
+                    <p className="text-[11px] sm:text-[12px] leading-relaxed max-w-lg" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>{sol.purpose}</p>
                   </div>
 
-                  <div className="mb-6">
+                  <div className="mb-4 sm:mb-6">
                     <div className="text-[9px] font-bold uppercase tracking-[0.22em] mb-1.5" style={{ fontFamily: FONT_BADGE, color: sol.color }}>Business value</div>
-                    <p className="text-[12px] leading-relaxed max-w-lg" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>{sol.value}</p>
+                    <p className="text-[11px] sm:text-[12px] leading-relaxed max-w-lg" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>{sol.value}</p>
                   </div>
 
                   <button
                     onClick={handleViewDetails}
-                    className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full font-bold text-white text-[11px] transition-all duration-300"
+                    className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-white text-[11px] transition-all duration-300"
                     style={{ background: sol.color, fontFamily: FONT_NAV, boxShadow: `0 6px 20px ${sol.color}35`, border: 'none', cursor: 'pointer' }}
                     onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
                     onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'none'; }}>
@@ -515,9 +623,6 @@ function AiAgentSolutions() {
                           </span>
                         ))}
                       </div>
-                      <p className="text-center text-[9px] mt-3" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>
-                        A Product of ENZAPPS · Marketed by Aioon
-                      </p>
                     </div>
                   </div>
                 </motion.div>
@@ -525,6 +630,14 @@ function AiAgentSolutions() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Mobile dots */}
+      <div className="flex justify-center gap-2 pt-4 pb-2 lg:hidden">
+        {solutions.map((_, i) => (
+          <button key={i} onClick={() => handleGo(i)}
+            style={{ width: i === activeSlide ? 20 : 6, height: 6, borderRadius: 99, border: 'none', padding: 0, cursor: 'pointer', background: i === activeSlide ? ACCENT : BORDER, transition: 'all 0.38s cubic-bezier(0.22,1,0.36,1)' }} />
+        ))}
       </div>
     </section>
   );
@@ -587,17 +700,17 @@ function WhyChooseUs() {
   return (
     <section className="relative overflow-hidden" style={{ background: BG_WHITE }}>
       <div className="w-full h-px" style={{ background: BORDER }} />
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-12 pb-8">
-        <div className="flex items-end justify-between flex-wrap gap-4">
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-10 sm:pt-12 pb-6 sm:pb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 flex-wrap">
           <div>
-            <h2 className="font-bold leading-tight" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.6rem,3.2vw,2.4rem)', color: TEXT_PRIMARY }}>
+            <h2 className="font-bold leading-tight" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.4rem,3.2vw,2.4rem)', color: TEXT_PRIMARY }}>
               Built Different. <span style={{ color: ACCENT }}>Proven Better.</span>
             </h2>
           </div>
           <div className="hidden lg:flex items-center gap-2.5">
             {stats.map((s, i) => (
-              <motion.div key={i}
-                className="flex items-center gap-2"
+              <motion.div key={i} className="flex items-center gap-2"
                 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}>
                 <span className="font-black" style={{ fontFamily: FONT_HEADING, fontSize: '15px', color: ACCENT }}>
@@ -609,27 +722,50 @@ function WhyChooseUs() {
             ))}
           </div>
         </div>
+
+        <div className="grid grid-cols-4 gap-2 mt-4 lg:hidden">
+          {stats.map((s, i) => (
+            <div key={i} className="rounded-xl px-2 py-2.5 text-center"
+              style={{ background: BG_LIGHT, border: `1px solid ${BORDER}` }}>
+              <div className="font-black text-[14px] sm:text-[16px]" style={{ fontFamily: FONT_HEADING, color: ACCENT }}>
+                <AnimatedCounter target={s.val} suffix={s.suf} />
+              </div>
+              <div className="text-[7px] sm:text-[8px] uppercase tracking-wide mt-0.5" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="relative z-10 flex flex-col lg:flex-row" style={{ minHeight: '52vh' }}>
-        <div className="lg:w-[220px] flex-shrink-0 flex lg:flex-col justify-start gap-0 px-5 sm:px-8 lg:pl-12 lg:pr-0 pb-3 lg:pb-10 overflow-x-auto lg:overflow-visible">
+      <div className="relative z-10 flex flex-col lg:flex-row" style={{ minHeight: 'clamp(300px, 52vh, 600px)' }}>
+
+        <div className="lg:hidden flex gap-2 px-4 sm:px-8 pb-3 overflow-x-auto">
+          {features.map((feat, i) => (
+            <button key={i} onClick={() => goTo(i)}
+              className="flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all duration-300"
+              style={{ fontFamily: FONT_BADGE, background: active === i ? ACCENT : BG_LIGHT, color: active === i ? '#fff' : TEXT_MUTED, border: `1px solid ${active === i ? ACCENT : BORDER}`, whiteSpace: 'nowrap' }}>
+              {feat.num} {feat.tag}
+            </button>
+          ))}
+        </div>
+
+        <div className="hidden lg:flex lg:w-[220px] flex-shrink-0 flex-col justify-start gap-0 pl-12 pr-0 pb-10">
           {features.map((feat, i) => {
             const isActive = active === i;
             return (
               <motion.button key={i} onClick={() => goTo(i)}
-                className="relative flex-shrink-0 lg:flex-shrink text-left py-3.5 lg:py-4 pr-5 lg:pr-7 transition-all duration-300"
+                className="relative text-left py-4 pr-7 transition-all duration-300"
                 style={{ borderBottom: `1px solid ${BORDER}` }}
                 whileHover={{ x: 3 }}>
                 <motion.div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-full"
                   style={{ background: ACCENT }}
                   animate={{ opacity: isActive ? 1 : 0, scaleY: isActive ? 1 : 0.25 }}
                   transition={{ duration: 0.32 }} />
-                <div className="pl-4 lg:pl-4">
+                <div className="pl-4">
                   <div className="text-[9px] font-bold tracking-[0.2em] mb-0.5 transition-colors duration-300"
                     style={{ fontFamily: FONT_BADGE, color: isActive ? ACCENT : TEXT_MUTED }}>
                     {feat.num} — {feat.tag}
                   </div>
-                  <div className="font-semibold text-[12px] leading-tight transition-colors duration-300 whitespace-nowrap lg:whitespace-normal"
+                  <div className="font-semibold text-[12px] leading-tight transition-colors duration-300"
                     style={{ fontFamily: FONT_HEADING, color: isActive ? TEXT_PRIMARY : TEXT_MUTED }}>
                     {feat.title}
                   </div>
@@ -649,7 +785,7 @@ function WhyChooseUs() {
               </motion.button>
             );
           })}
-          <div className="hidden lg:block px-4 mt-5 mb-3">
+          <div className="px-4 mt-5 mb-3">
             <div className="h-[2px] w-full rounded-full" style={{ background: BG_LIGHTER }}>
               <motion.div className="h-[2px] rounded-full" style={{ background: ACCENT }}
                 animate={{ width: `${((active + 1) / features.length) * 100}%` }}
@@ -662,7 +798,7 @@ function WhyChooseUs() {
           </div>
         </div>
 
-        <div className="flex-1 relative overflow-hidden" style={{ minHeight: '46vw', maxHeight: '65vh' }}>
+        <div className="flex-1 relative overflow-hidden" style={{ minHeight: 'clamp(280px, 46vw, 500px)', maxHeight: '65vh' }}>
           <AnimatePresence custom={direction} mode="wait">
             <motion.div key={`img-${active}`} className="absolute inset-0"
               custom={direction} variants={imgVariants} initial="enter" animate="center" exit="exit">
@@ -675,7 +811,7 @@ function WhyChooseUs() {
             </motion.div>
           </AnimatePresence>
 
-          <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-9 lg:p-10 z-10">
+          <div className="absolute inset-0 flex flex-col justify-between p-4 sm:p-7 lg:p-10 z-10">
             <div className="flex items-center justify-between">
               <AnimatePresence mode="wait">
                 <motion.div key={`tag-${active}`}
@@ -695,7 +831,7 @@ function WhyChooseUs() {
                   { arrow: '›', fn: () => goTo((active + 1) % features.length) },
                 ].map((b, bi) => (
                   <button key={bi} onClick={b.fn}
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300"
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300"
                     style={{ background: BG_WHITE, border: `1px solid ${BORDER}`, color: TEXT_SEC, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
                     onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = ACCENT; }}
                     onMouseLeave={e => { e.currentTarget.style.background = BG_WHITE; e.currentTarget.style.color = TEXT_SEC; e.currentTarget.style.borderColor = BORDER; }}>
@@ -712,31 +848,31 @@ function WhyChooseUs() {
                 exit={{ opacity: 0, y: -18, transition: { duration: 0.28 } }}
                 className="max-w-xl">
                 <h3 className="font-bold leading-tight mb-2"
-                  style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.2rem,2.4vw,1.9rem)', color: TEXT_PRIMARY }}>
+                  style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1rem,2.4vw,1.9rem)', color: TEXT_PRIMARY }}>
                   {f.title}
                 </h3>
-                <motion.div className="h-[2px] mb-3 rounded-full" style={{ background: `linear-gradient(to right, ${ACCENT}, transparent)` }}
+                <motion.div className="h-[2px] mb-2 sm:mb-3 rounded-full" style={{ background: `linear-gradient(to right, ${ACCENT}, transparent)` }}
                   initial={{ width: 0 }} animate={{ width: '55%' }} transition={{ duration: 0.65, delay: 0.22 }} />
-                <p className="text-[12px] leading-relaxed mb-4 max-w-md" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>
+                <p className="text-[11px] sm:text-[12px] leading-relaxed mb-3 sm:mb-4 max-w-md" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>
                   {f.body}
                 </p>
-                <div className="flex items-center gap-5">
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-black leading-none" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.7rem,3vw,2.4rem)', color: ACCENT }}>
+                <div className="flex items-center gap-3 sm:gap-5">
+                  <div className="flex items-baseline gap-1 sm:gap-2">
+                    <span className="font-black leading-none" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.4rem,3vw,2.4rem)', color: ACCENT }}>
                       {f.metric}
                     </span>
-                    <span className="text-[9px] font-bold uppercase tracking-[0.18em]" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>
+                    <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.18em]" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>
                       {f.metricLabel}
                     </span>
                   </div>
-                  <div className="w-px h-10" style={{ background: BORDER }} />
-                  <span className="text-[10px]" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>{f.sub}</span>
+                  <div className="w-px h-8 sm:h-10" style={{ background: BORDER }} />
+                  <span className="text-[9px] sm:text-[10px]" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>{f.sub}</span>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          <div className="absolute bottom-5 right-6 flex gap-2 z-20">
+          <div className="absolute bottom-4 right-5 sm:bottom-5 sm:right-6 flex gap-2 z-20">
             {features.map((_, i) => (
               <button key={i} onClick={() => goTo(i)}
                 style={{
@@ -750,56 +886,27 @@ function WhyChooseUs() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pb-8">
-        <div className="lg:hidden flex gap-2 mt-4 overflow-x-auto pb-1">
-          {features.map((feat, i) => (
-            <button key={i} onClick={() => goTo(i)}
-              className="flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all duration-300"
-              style={{ fontFamily: FONT_BADGE, background: active === i ? ACCENT : BG_LIGHT, color: active === i ? '#fff' : TEXT_MUTED, border: `1px solid ${active === i ? ACCENT : BORDER}` }}>
-              {feat.num} {feat.tag}
-            </button>
-          ))}
-        </div>
-        <div className="md:hidden grid grid-cols-4 gap-2 mt-3">
-          {stats.map((s, i) => (
-            <div key={i} className="rounded-xl px-2 py-2.5 text-center"
-              style={{ background: BG_LIGHT, border: `1px solid ${BORDER}` }}>
-              <div className="font-black text-[15px]" style={{ fontFamily: FONT_HEADING, color: ACCENT }}>
-                <AnimatedCounter target={s.val} suffix={s.suf} />
-              </div>
-              <div className="text-[8px] uppercase tracking-wide mt-0.5" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
       <div className="w-full h-px" style={{ background: BORDER }} />
     </section>
   );
 }
 
-// ─── PREMIUM FOOTER ────────────────────────────────────────────────────────────
+// ─── FOOTER ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
     <footer style={{ background: FOOTER_BG, borderTop: `1px solid ${BORDER}` }}>
-
-      {/* Main footer content */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-14 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
-
-          {/* Col 1 — Brand */}
-          <div className="md:col-span-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-12 sm:pt-14 pb-8 sm:pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-8">
+          <div className="sm:col-span-2 lg:col-span-4">
             <img src={logo} alt="AIOON" className="h-9 w-auto mb-5" />
             <p className="text-[12.5px] leading-[1.8] mb-6 max-w-xs" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>
               Pioneering digital transformation in Saudi Arabia with innovative technology solutions aligned with Vision 2030.
             </p>
-            {/* Social icons */}
             <div className="flex items-center gap-4">
               {SOCIALS.map((social, i) => (
                 <motion.a
                   key={i}
                   href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   title={social.label}
                   whileHover={{ y: -3, scale: 1.18 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 18 }}
@@ -813,8 +920,7 @@ function Footer() {
             </div>
           </div>
 
-          {/* Col 2 — Navigation */}
-          <div className="md:col-span-2">
+          <div className="sm:col-span-1 lg:col-span-2">
             <h4 className="text-[10px] font-bold uppercase tracking-[0.28em] mb-5"
               style={{ fontFamily: FONT_BADGE, color: TEXT_PRIMARY }}>
               Navigation
@@ -824,6 +930,7 @@ function Footer() {
                 { label: 'Home', to: '/' },
                 { label: 'About Us', to: '/about' },
                 { label: 'AI Agents', to: '/ai-agents' },
+                { label: 'ELV Solutions', to: '/products' },
                 { label: 'Contact', to: '/contact' },
               ].map((item, i) => (
                 <li key={i}>
@@ -843,8 +950,7 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Col 3 — Contact */}
-          <div className="md:col-span-3">
+          <div className="sm:col-span-1 lg:col-span-3">
             <h4 className="text-[10px] font-bold uppercase tracking-[0.28em] mb-5"
               style={{ fontFamily: FONT_BADGE, color: TEXT_PRIMARY }}>
               Get in Touch
@@ -865,8 +971,8 @@ function Footer() {
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
                     </svg>
                   ),
-                  text: 'info@aioon.com',
-                  href: 'mailto:info@aioon.com',
+                  text: 'info@aioon.sa',
+                  href: 'mailto:info@aioon.sa',
                 },
                 {
                   icon: (
@@ -876,6 +982,15 @@ function Footer() {
                   ),
                   text: '+966 535 141 447',
                   href: 'tel:+966535141447',
+                },
+                {
+                  icon: (
+                    <svg viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="1.8" width="14" height="14">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                  ),
+                  text: '+966 535 090 840',
+                  href: 'tel:+966535090840',
                 },
               ].map((item, i) => (
                 <li key={i}>
@@ -907,8 +1022,7 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Col 4 — ENZAPPS Partner */}
-          <div className="md:col-span-3">
+          <div className="sm:col-span-2 lg:col-span-3">
             <h4 className="text-[10px] font-bold uppercase tracking-[0.28em] mb-5"
               style={{ fontFamily: FONT_BADGE, color: TEXT_PRIMARY }}>
               Powered By
@@ -920,18 +1034,13 @@ function Footer() {
               </p>
             </div>
           </div>
-
         </div>
       </div>
 
-      {/* Divider */}
       <div className="w-full h-px" style={{ background: BORDER }} />
 
-      {/* Bottom bar */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-5">
         <div className="flex flex-col items-center gap-4">
-
-          {/* Policy links — centred */}
           <div className="flex flex-wrap items-center justify-center gap-1">
             {[
               { label: 'Privacy Policy', to: '/privacy-policy' },
@@ -954,7 +1063,6 @@ function Footer() {
             ))}
           </div>
 
-          {/* Copyright row */}
           <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-2">
             <p className="text-[10.5px]" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>
               &copy; {new Date().getFullYear()} AIOON Technologies. All rights reserved.
@@ -963,7 +1071,6 @@ function Footer() {
               Proudly supporting Saudi Vision 2030 🇸🇦
             </p>
           </div>
-
         </div>
       </div>
     </footer>
@@ -974,12 +1081,10 @@ function Footer() {
 function PolicyPage({ title, subtitle, children }) {
   return (
     <div className="min-h-screen pt-24 pb-20" style={{ background: BG_WHITE }}>
-
-      {/* Hero */}
       <div className="relative overflow-hidden" style={{ background: FOOTER_BG, borderBottom: `1px solid ${BORDER}` }}>
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: `radial-gradient(ellipse at 70% 50%, ${ACCENT}08 0%, transparent 70%)` }} />
-        <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12 py-14 md:py-20 relative z-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 py-14 md:py-20 relative z-10">
           <h1 className="font-bold mb-3 leading-[1.1]"
             style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.8rem,4vw,2.8rem)', color: TEXT_PRIMARY }}>
             {title}
@@ -989,17 +1094,15 @@ function PolicyPage({ title, subtitle, children }) {
           )}
         </div>
       </div>
-
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-5 sm:px-8 lg:px-12 py-14">
-        {children}
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 lg:px-12 py-14">
+        <div className="space-y-8">
+          {children}
+        </div>
       </div>
-
     </div>
   );
 }
 
-// Shared section heading for policy pages
 function PolicySection({ number, title, children }) {
   return (
     <motion.div
@@ -1008,16 +1111,16 @@ function PolicySection({ number, title, children }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5 }}>
-      <div className="flex items-start gap-4 mb-3">
-        <span className="flex-shrink-0 text-[10px] font-black px-2 py-0.5 rounded-md mt-1"
-          style={{ fontFamily: FONT_BADGE, color: ACCENT, background: ACCENT_SOFT, border: `1px solid ${ACCENT}20` }}>
+      <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-3">
+        <span className="flex-shrink-0 text-[10px] font-black px-2 py-0.5 rounded-md"
+          style={{ fontFamily: FONT_BADGE, color: ACCENT, background: ACCENT_SOFT, border: `1px solid ${ACCENT}20`, alignSelf: 'flex-start' }}>
           {String(number).padStart(2, '0')}
         </span>
         <h2 className="font-bold leading-tight" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1rem,2vw,1.2rem)', color: TEXT_PRIMARY }}>
           {title}
         </h2>
       </div>
-      <div className="ml-10">
+      <div className="sm:ml-10">
         <div className="h-px mb-4" style={{ background: BORDER }} />
         <div className="text-[13px] leading-[1.9]" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>
           {children}
@@ -1027,33 +1130,19 @@ function PolicySection({ number, title, children }) {
   );
 }
 
-// ─── PRIVACY POLICY PAGE ──────────────────────────────────────────────────────
 function PrivacyPolicyPage() {
   return (
-    <PolicyPage
-      title="Privacy Policy"
-      subtitle="Last updated · www.aioon.sa · Your privacy is our priority.">
-
+    <PolicyPage title="Privacy Policy" subtitle="Last updated · www.aioon.sa · Your privacy is our priority.">
       <PolicySection number={1} title="Introduction">
         At Aioon Alnajah, accessible from <a href="https://www.aioon.sa" target="_blank" rel="noopener noreferrer" style={{ color: ACCENT }}>www.aioon.sa</a>, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Aioon Alnajah and how we use it. This policy applies only to our online activities and is valid for visitors to our website with regards to information they shared and/or collected on Aioon Alnajah. It is not applicable to any information collected offline or via channels other than this website. By using our website, you hereby consent to our Privacy Policy and agree to its terms.
       </PolicySection>
-
       <PolicySection number={2} title="Information We Collect">
         The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide it. If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide. When you register for an Account, we may ask for your contact information, including items such as name, company name, address, email address, and telephone number.
       </PolicySection>
-
       <PolicySection number={3} title="How We Use Your Information">
         <p className="mb-3">We use the information we collect in various ways, including to:</p>
         <ul className="space-y-2 ml-2">
-          {[
-            'Provide, operate, and maintain our website',
-            'Improve, personalize, and expand our website',
-            'Understand and analyze how you use our website',
-            'Develop new products, services, features, and functionality',
-            'Communicate with you, either directly or through one of our partners, including for customer service, updates, and marketing',
-            'Send you emails',
-            'Find and prevent fraud',
-          ].map((item, i) => (
+          {['Provide, operate, and maintain our website','Improve, personalize, and expand our website','Understand and analyze how you use our website','Develop new products, services, features, and functionality','Communicate with you, either directly or through one of our partners, including for customer service, updates, and marketing','Send you emails','Find and prevent fraud'].map((item, i) => (
             <li key={i} className="flex items-start gap-2.5">
               <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2" style={{ background: ACCENT }} />
               <span>{item}</span>
@@ -1061,30 +1150,13 @@ function PrivacyPolicyPage() {
           ))}
         </ul>
       </PolicySection>
-
-      <PolicySection number={4} title="Log Files">
-        Aioon Alnajah follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any personally identifiable information. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.
-      </PolicySection>
-
-      <PolicySection number={5} title="Third-Party Privacy Policies">
-        Aioon Alnajah's Privacy Policy does not apply to other advertisers or websites. We advise you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons in their respective advertisements and links that appear on Aioon Alnajah, which are sent directly to users' browsers. You can choose to disable cookies through your individual browser options.
-      </PolicySection>
-
-      <PolicySection number={6} title="CCPA Privacy Rights">
-        Under the CCPA, California consumers have the right to request that a business disclose the categories and specific pieces of personal data collected about consumers; request that a business delete any personal data about the consumer; and request that a business not sell the consumer's personal data. If you make a request, we have one month to respond.
-      </PolicySection>
-
+      <PolicySection number={4} title="Log Files">Aioon Alnajah follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any personally identifiable information. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.</PolicySection>
+      <PolicySection number={5} title="Third-Party Privacy Policies">Aioon Alnajah's Privacy Policy does not apply to other advertisers or websites. We advise you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons in their respective advertisements and links that appear on Aioon Alnajah, which are sent directly to users' browsers. You can choose to disable cookies through your individual browser options.</PolicySection>
+      <PolicySection number={6} title="CCPA Privacy Rights">Under the CCPA, California consumers have the right to request that a business disclose the categories and specific pieces of personal data collected about consumers; request that a business delete any personal data about the consumer; and request that a business not sell the consumer's personal data. If you make a request, we have one month to respond.</PolicySection>
       <PolicySection number={7} title="GDPR Data Protection Rights">
         <p className="mb-3">Every user is entitled to the following rights:</p>
         <ul className="space-y-2 ml-2">
-          {[
-            'The right to access — request copies of your personal data',
-            'The right to rectification — request correction of inaccurate information',
-            'The right to erasure — request erasure of your personal data, under certain conditions',
-            'The right to restrict processing — request restriction of processing, under certain conditions',
-            'The right to object to processing — object to our processing, under certain conditions',
-            'The right to data portability — request transfer of your data to another organization',
-          ].map((item, i) => (
+          {['The right to access — request copies of your personal data','The right to rectification — request correction of inaccurate information','The right to erasure — request erasure of your personal data, under certain conditions','The right to restrict processing — request restriction of processing, under certain conditions','The right to object to processing — object to our processing, under certain conditions','The right to data portability — request transfer of your data to another organization'].map((item, i) => (
             <li key={i} className="flex items-start gap-2.5">
               <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2" style={{ background: ACCENT }} />
               <span>{item}</span>
@@ -1093,40 +1165,21 @@ function PrivacyPolicyPage() {
         </ul>
         <p className="mt-3">If you make a request, we have one month to respond.</p>
       </PolicySection>
-
-      <PolicySection number={8} title="Children's Information">
-        Aioon Alnajah does not knowingly collect any Personally Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.
-      </PolicySection>
-
+      <PolicySection number={8} title="Children's Information">Aioon Alnajah does not knowingly collect any Personally Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</PolicySection>
     </PolicyPage>
   );
 }
 
-// ─── TERMS & CONDITIONS PAGE ──────────────────────────────────────────────────
 function TermsAndConditionsPage() {
   return (
-    <PolicyPage
-      title="Terms & Conditions"
-      subtitle="Please read these terms carefully before using www.aioon.sa.">
-
-      <PolicySection number={1} title="Introduction">
-        Welcome to Aioon Alnajah! These terms and conditions outline the rules and regulations for the use of Aioon Alnajah's website, located at <a href="https://www.aioon.sa" target="_blank" rel="noopener noreferrer" style={{ color: ACCENT }}>www.aioon.sa</a>. By accessing this website we assume you accept these terms and conditions. Do not continue to use Aioon Alnajah if you do not agree to take all of the terms and conditions stated on this page.
-      </PolicySection>
-
-      <PolicySection number={2} title="Cookies">
-        We employ the use of cookies. By accessing Aioon Alnajah, you agreed to use cookies in agreement with Aioon Alnajah's Privacy Policy. Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website.
-      </PolicySection>
-
+    <PolicyPage title="Terms & Conditions" subtitle="Please read these terms carefully before using www.aioon.sa.">
+      <PolicySection number={1} title="Introduction">Welcome to Aioon Alnajah! These terms and conditions outline the rules and regulations for the use of Aioon Alnajah's website, located at <a href="https://www.aioon.sa" target="_blank" rel="noopener noreferrer" style={{ color: ACCENT }}>www.aioon.sa</a>. By accessing this website we assume you accept these terms and conditions. Do not continue to use Aioon Alnajah if you do not agree to take all of the terms and conditions stated on this page.</PolicySection>
+      <PolicySection number={2} title="Cookies">We employ the use of cookies. By accessing Aioon Alnajah, you agreed to use cookies in agreement with Aioon Alnajah's Privacy Policy. Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website.</PolicySection>
       <PolicySection number={3} title="License">
         <p className="mb-3">Unless otherwise stated, Aioon Alnajah and/or its licensors own the intellectual property rights for all material on Aioon Alnajah. All intellectual property rights are reserved. You may access this from Aioon Alnajah for your own personal use subjected to restrictions set in these terms and conditions.</p>
         <p className="mb-2 font-semibold" style={{ color: TEXT_PRIMARY }}>You must not:</p>
         <ul className="space-y-2 ml-2">
-          {[
-            'Republish material from Aioon Alnajah',
-            'Sell, rent or sub-license material from Aioon Alnajah',
-            'Reproduce, duplicate or copy material from Aioon Alnajah',
-            'Redistribute content from Aioon Alnajah',
-          ].map((item, i) => (
+          {['Republish material from Aioon Alnajah','Sell, rent or sub-license material from Aioon Alnajah','Reproduce, duplicate or copy material from Aioon Alnajah','Redistribute content from Aioon Alnajah'].map((item, i) => (
             <li key={i} className="flex items-start gap-2.5">
               <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2" style={{ background: ACCENT }} />
               <span>{item}</span>
@@ -1134,48 +1187,22 @@ function TermsAndConditionsPage() {
           ))}
         </ul>
       </PolicySection>
-
-      <PolicySection number={4} title="Hyperlinking to Our Content">
-        <p className="mb-3">The following organizations may link to our Website without prior written approval: Government agencies; Search engines; News organizations; Online directory distributors; and System wide Accredited Businesses. These organizations may link to our home page, to publications or to other Website information so long as the link is not in any way deceptive, does not falsely imply sponsorship or endorsement, and fits within the context of the linking party's site.</p>
-      </PolicySection>
-
-      <PolicySection number={5} title="iFrames">
-        Without prior approval and written permission, you may not create frames around our webpages that alter in any way the visual presentation or appearance of our website.
-      </PolicySection>
-
-      <PolicySection number={6} title="Content Liability">
-        We shall not be held responsible for any content that appears on your website. You agree to protect and defend us against all claims that are rising on your website. No link(s) should appear on any website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.
-      </PolicySection>
-
-      <PolicySection number={7} title="Reservation of Rights">
-        We reserve the right to request that you remove all links or any particular link to our website. You approve to immediately remove all links to our website upon request. We also reserve the right to amend these terms and conditions and its linking policy at any time. By continuously linking to our website, you agree to be bound to and follow these linking terms and conditions.
-      </PolicySection>
-
-      <PolicySection number={8} title="Disclaimer">
-        To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. The limitations and prohibitions of liability set in this section govern all liabilities arising under the disclaimer, including liabilities arising in contract, in tort and for breach of statutory duty. As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.
-      </PolicySection>
-
+      <PolicySection number={4} title="Hyperlinking to Our Content"><p className="mb-3">The following organizations may link to our Website without prior written approval: Government agencies; Search engines; News organizations; Online directory distributors; and System wide Accredited Businesses. These organizations may link to our home page, to publications or to other Website information so long as the link is not in any way deceptive, does not falsely imply sponsorship or endorsement, and fits within the context of the linking party's site.</p></PolicySection>
+      <PolicySection number={5} title="iFrames">Without prior approval and written permission, you may not create frames around our webpages that alter in any way the visual presentation or appearance of our website.</PolicySection>
+      <PolicySection number={6} title="Content Liability">We shall not be held responsible for any content that appears on your website. You agree to protect and defend us against all claims that are rising on your website. No link(s) should appear on any website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.</PolicySection>
+      <PolicySection number={7} title="Reservation of Rights">We reserve the right to request that you remove all links or any particular link to our website. You approve to immediately remove all links to our website upon request. We also reserve the right to amend these terms and conditions and its linking policy at any time. By continuously linking to our website, you agree to be bound to and follow these linking terms and conditions.</PolicySection>
+      <PolicySection number={8} title="Disclaimer">To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. The limitations and prohibitions of liability set in this section govern all liabilities arising under the disclaimer, including liabilities arising in contract, in tort and for breach of statutory duty. As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.</PolicySection>
     </PolicyPage>
   );
 }
 
-// ─── REFUND & CANCELLATION POLICY PAGE ────────────────────────────────────────
 function RefundPolicyPage() {
   return (
-    <PolicyPage
-      title="Refund & Cancellation Policy"
-      subtitle="We want you to be completely happy with your purchase. Here's how our return process works.">
-
-      <PolicySection number={1} title="Return Eligibility">
-        If you are not happy with your purchase, we will accept a return of an unused product within 14 days. Once we receive the returned item, Aioon Alnajah will then give a full refund — excluding shipping, as we are unable to refund the initial shipping cost of your order. Please allow 1–2 weeks for your return to be processed.
-      </PolicySection>
-
+    <PolicyPage title="Refund & Cancellation Policy" subtitle="We want you to be completely happy with your purchase. Here's how our return process works.">
+      <PolicySection number={1} title="Return Eligibility">If you are not happy with your purchase, we will accept a return of an unused product within 14 days. Once we receive the returned item, Aioon Alnajah will then give a full refund — excluding shipping, as we are unable to refund the initial shipping cost of your order. Please allow 1–2 weeks for your return to be processed.</PolicySection>
       <PolicySection number={2} title="Non-Eligible Items">
         <ul className="space-y-2 ml-2">
-          {[
-            'Discounted items are not eligible for a return.',
-            'Aioon Alnajah will not issue refunds for products purchased through other entities, such as distributors or retail partners.',
-          ].map((item, i) => (
+          {['Discounted items are not eligible for a return.','Aioon Alnajah will not issue refunds for products purchased through other entities, such as distributors or retail partners.'].map((item, i) => (
             <li key={i} className="flex items-start gap-2.5">
               <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2" style={{ background: ACCENT }} />
               <span>{item}</span>
@@ -1183,80 +1210,41 @@ function RefundPolicyPage() {
           ))}
         </ul>
       </PolicySection>
-
-      <PolicySection number={3} title="Condition of Returned Items">
-        Returned items must be delivered to us unused, in original packaging and in the condition they were received — or they may not be eligible for a refund, or be subject to a restocking fee. We cannot be held responsible for items damaged or lost in return shipment; therefore we recommend an insured and trackable mail service.
-      </PolicySection>
-
-      <PolicySection number={4} title="Proof of Return">
-        We are unable to issue a refund without actual receipt of the item(s) or proof of received return delivery.
-      </PolicySection>
-
-      <PolicySection number={5} title="Inspection on Arrival">
-        We aim to accept all returns. In the unlikely event that an item is returned to us in an unsuitable condition, we may have to send it back to you. All goods will be inspected on return.
-      </PolicySection>
-
-      {/* Contact nudge */}
-      <motion.div
-        className="mt-10 rounded-2xl p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5"
-        style={{ background: ACCENT_SOFT, border: `1px solid ${ACCENT}20` }}
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}>
+      <PolicySection number={3} title="Condition of Returned Items">Returned items must be delivered to us unused, in original packaging and in the condition they were received — or they may not be eligible for a refund, or be subject to a restocking fee. We cannot be held responsible for items damaged or lost in return shipment; therefore we recommend an insured and trackable mail service.</PolicySection>
+      <PolicySection number={4} title="Proof of Return">We are unable to issue a refund without actual receipt of the item(s) or proof of received return delivery.</PolicySection>
+      <PolicySection number={5} title="Inspection on Arrival">We aim to accept all returns. In the unlikely event that an item is returned to us in an unsuitable condition, we may have to send it back to you. All goods will be inspected on return.</PolicySection>
+      <motion.div className="mt-10 rounded-2xl p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5" style={{ background: ACCENT_SOFT, border: `1px solid ${ACCENT}20` }} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
         <div className="flex-1">
-          <div className="font-bold mb-1" style={{ fontFamily: FONT_HEADING, fontSize: '14px', color: TEXT_PRIMARY }}>
-            Have questions about a return?
-          </div>
-          <p className="text-[12px]" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>
-            Our team is happy to help you through the process — reach out before shipping your item back.
-          </p>
+          <div className="font-bold mb-1" style={{ fontFamily: FONT_HEADING, fontSize: '14px', color: TEXT_PRIMARY }}>Have questions about a return?</div>
+          <p className="text-[12px]" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>Our team is happy to help you through the process — reach out before shipping your item back.</p>
         </div>
-        <Link
-          to="/contact"
-          className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-[11px] font-bold transition-all duration-200"
-          style={{ background: ACCENT, fontFamily: FONT_NAV, textDecoration: 'none' }}
-          onMouseEnter={e => { e.currentTarget.style.background = ACCENT2; }}
-          onMouseLeave={e => { e.currentTarget.style.background = ACCENT; }}>
-          Contact Us →
-        </Link>
+        <Link to="/contact" className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-[11px] font-bold transition-all duration-200" style={{ background: ACCENT, fontFamily: FONT_NAV, textDecoration: 'none' }} onMouseEnter={e => { e.currentTarget.style.background = ACCENT2; }} onMouseLeave={e => { e.currentTarget.style.background = ACCENT; }}>Contact Us →</Link>
       </motion.div>
-
     </PolicyPage>
   );
 }
 
 // ─── SHARED LAYOUT ────────────────────────────────────────────────────────────
 function SharedLayout() {
-  const [isMenuOpen, setIsMenuOpen]             = useState(false);
-  const [isArabic, setIsArabic]                 = useState(false);
-  const [showLangDropdown, setShowLangDropdown] = useState(false);
-  const [showWhatsApp, setShowWhatsApp]         = useState(false);
-  const [scrollY, setScrollY]                   = useState(0);
-  const [showELVDropdown, setShowELVDropdown]   = useState(false);
-  const [hoveredItem, setHoveredItem]           = useState(null);
-
-  const elvButtonRef = useRef(null);
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen]               = useState(false);
+  const [isArabic, setIsArabic]                   = useState(false);
+  const [showLangDropdown, setShowLangDropdown]   = useState(false);
+  const [showWhatsApp, setShowWhatsApp]           = useState(false);
+  const [scrollY, setScrollY]                     = useState(0);
+  const [showAIDropdown, setShowAIDropdown]       = useState(false);
+  const [hoveredAIItem, setHoveredAIItem]         = useState(null);
+  const [showMobileAIDropdown, setShowMobileAIDropdown] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-  const lang = isArabic ? 'ar' : 'en';
   const t = {
-    en: {
-      home: 'Home', about: 'About', elv: 'ELV Solutions', services: 'Services', contact: 'Contact',
-      wpHeader: 'Start a Conversation',
-      wpSub: 'Hi! Click below to chat with our Customer Support on WhatsApp',
-      wpCta: 'Customer Support Executive',
-    },
-    ar: {
-      home: 'الرئيسية', about: 'من نحن', elv: 'حلول ELV',
-      services: 'الخدمات', contact: 'اتصل بنا',
-      wpHeader: 'ابدأ محادثة',
-      wpSub: 'مرحبا! انقر أدناه للدردشة مع دعم العملاء',
-      wpCta: 'مدير دعم العملاء',
-    },
-  }[lang];
+    home: 'Home', about: 'About', aiAgents: 'AI Agents', elv: 'ELV Solutions', contact: 'Contact',
+    wpHeader: 'Start a Conversation',
+    wpSub: 'Hi! Click below to chat with our Customer Support on WhatsApp',
+    wpCta: 'Customer Support Executive',
+  };
 
   useEffect(() => {
     const f = () => setScrollY(window.scrollY);
@@ -1269,16 +1257,30 @@ function SharedLayout() {
       if (showLangDropdown && !event.target.closest('.language-dropdown-container')) {
         setShowLangDropdown(false);
       }
-      if (showELVDropdown && !event.target.closest('.elv-dropdown-container')) {
-        setShowELVDropdown(false);
+      if (showAIDropdown && !event.target.closest('.ai-dropdown-container')) {
+        setShowAIDropdown(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showLangDropdown, showELVDropdown]);
+  }, [showLangDropdown, showAIDropdown]);
+
+  const handleAIAgentSelect = (solutionId) => {
+    setShowAIDropdown(false);
+    setShowMobileAIDropdown(false);
+    setIsMenuOpen(false);
+    navigate('/ai-agents', { state: { activeSolutionId: solutionId, scrollToDetail: true } });
+  };
 
   return (
-    <div dir={isArabic ? 'rtl' : 'ltr'} className="min-h-screen" style={{ fontFamily: FONT_BODY, background: BG_WHITE, color: TEXT_PRIMARY }}>
+    <div className="min-h-screen" style={{ fontFamily: FONT_BODY, background: BG_WHITE, color: TEXT_PRIMARY }}>
+      <style>
+        {`
+          html { scroll-behavior: smooth; }
+          @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+        `}
+      </style>
+
       <motion.div className="fixed top-0 left-0 right-0 h-[2px] z-[200] origin-left"
         style={{ scaleX, background: `linear-gradient(to right, ${ACCENT2}, ${ACCENT}, ${ACCENT3})` }} />
 
@@ -1293,54 +1295,46 @@ function SharedLayout() {
           borderBottom: `1px solid ${scrollY > 60 ? BORDER : 'rgba(229,229,229,0.6)'}`,
           boxShadow: scrollY > 60 ? '0 2px 16px rgba(0,0,0,0.07)' : 'none',
         }}>
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-4 flex items-center justify-between relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-3 sm:py-4 flex items-center justify-between relative">
           <Link to="/">
-            <img src={logo} alt="AIOON" className="h-8 md:h-9 w-auto" />
+            <img src={logo} alt="AIOON" className="h-7 sm:h-8 md:h-9 w-auto" />
           </Link>
 
-          <ul className="hidden md:flex items-center justify-center gap-8 text-sm font-medium flex-1 mx-8" style={{ fontFamily: FONT_NAV }}>
-            <li className="relative group cursor-pointer transition-colors duration-300"
-              style={{ color: TEXT_SEC }}
+          {/* Desktop nav */}
+          <ul className="hidden md:flex items-center justify-center gap-6 lg:gap-8 text-sm font-medium flex-1 mx-6 lg:mx-8" style={{ fontFamily: FONT_NAV }}>
+            <li className="relative group cursor-pointer transition-colors duration-300" style={{ color: TEXT_SEC }}
               onMouseEnter={e => { e.currentTarget.style.color = TEXT_PRIMARY; }}
               onMouseLeave={e => { e.currentTarget.style.color = TEXT_SEC; }}>
               <Link to="/" style={{ color: 'inherit' }}>{t.home}</Link>
-              <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full"
-                style={{ background: ACCENT }} />
+              <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full" style={{ background: ACCENT }} />
             </li>
-            <li className="relative group cursor-pointer transition-colors duration-300"
-              style={{ color: TEXT_SEC }}
+
+            <li className="relative group cursor-pointer transition-colors duration-300" style={{ color: TEXT_SEC }}
               onMouseEnter={e => { e.currentTarget.style.color = TEXT_PRIMARY; }}
               onMouseLeave={e => { e.currentTarget.style.color = TEXT_SEC; }}>
               <Link to="/about" style={{ color: 'inherit' }}>{t.about}</Link>
-              <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full"
-                style={{ background: ACCENT }} />
+              <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full" style={{ background: ACCENT }} />
             </li>
 
-            <li className="relative elv-dropdown-container"
-              ref={elvButtonRef}
-              onMouseEnter={() => setShowELVDropdown(true)}
-              onMouseLeave={() => { setShowELVDropdown(false); setHoveredItem(null); }}>
-              <button
-                type="button"
-                onClick={() => setShowELVDropdown(prev => !prev)}
+            <li className="relative ai-dropdown-container"
+              onMouseEnter={() => setShowAIDropdown(true)}
+              onMouseLeave={() => { setShowAIDropdown(false); setHoveredAIItem(null); }}>
+              <button type="button" onClick={() => setShowAIDropdown(prev => !prev)}
                 className="cursor-pointer transition-colors duration-300 flex items-center gap-1.5"
-                style={{
-                  fontFamily: FONT_NAV, fontSize: '14px', fontWeight: 500,
-                  color: TEXT_SEC, background: 'none', border: 'none', padding: 0,
-                }}
+                style={{ fontFamily: FONT_NAV, fontSize: '14px', fontWeight: 500, color: TEXT_SEC, background: 'none', border: 'none', padding: 0 }}
                 onMouseEnter={e => { e.currentTarget.style.color = TEXT_PRIMARY; }}
                 onMouseLeave={e => { e.currentTarget.style.color = TEXT_SEC; }}>
-                {t.elv}
+                {t.aiAgents}
                 <motion.svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"
-                  animate={{ rotate: showELVDropdown ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                  animate={{ rotate: showAIDropdown ? 180 : 0 }} transition={{ duration: 0.25 }}>
                   <polyline points="6 9 12 15 18 9" />
                 </motion.svg>
               </button>
               <span className="absolute -bottom-0.5 left-0 h-[2px] rounded-full transition-all duration-300"
-                style={{ background: ACCENT, width: showELVDropdown ? '100%' : '0%' }} />
+                style={{ background: ACCENT, width: showAIDropdown ? '100%' : '0%' }} />
 
               <AnimatePresence>
-                {showELVDropdown && (
+                {showAIDropdown && (
                   <motion.div
                     initial={{ opacity: 0, y: 12, scale: 0.97 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -1348,37 +1342,27 @@ function SharedLayout() {
                     transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                     className="absolute top-full mt-3 rounded-2xl overflow-hidden"
                     style={{
-                      background: BG_WHITE,
-                      border: `1px solid ${BORDER}`,
+                      background: BG_WHITE, border: `1px solid ${BORDER}`,
                       boxShadow: '0 16px 48px rgba(0,0,0,0.12)',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      width: '300px',
+                      left: '50%', transform: 'translateX(-50%)', width: '320px',
                     }}>
                     <div className="grid grid-cols-1 gap-0 p-2">
-                      {ELV_DROPDOWN_ITEMS.map((item, i) => (
-                        <Link key={i} to={`/product/${item.productId}`}
-                          className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-all duration-200"
-                          style={{
-                            fontFamily: FONT_NAV, color: hoveredItem === i ? ACCENT : TEXT_PRIMARY,
-                            background: hoveredItem === i ? ACCENT_SOFT : 'transparent', textDecoration: 'none',
-                          }}
-                          onMouseEnter={() => setHoveredItem(i)}
-                          onMouseLeave={() => setHoveredItem(null)}
-                          onClick={() => { setShowELVDropdown(false); setHoveredItem(null); }}>
+                      {AI_AGENTS_DROPDOWN_ITEMS.map((item, i) => (
+                        <button key={i} onClick={() => handleAIAgentSelect(item.solutionId)}
+                          className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg transition-all duration-200 w-full text-left"
+                          style={{ fontFamily: FONT_NAV, color: hoveredAIItem === i ? ACCENT : TEXT_PRIMARY, background: hoveredAIItem === i ? ACCENT_SOFT : 'transparent', border: 'none', cursor: 'pointer' }}
+                          onMouseEnter={() => setHoveredAIItem(i)}
+                          onMouseLeave={() => setHoveredAIItem(null)}>
                           <div className="flex-shrink-0 w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200"
-                            style={{
-                              background: hoveredItem === i ? `${ACCENT}15` : BG_LIGHTER,
-                              color: hoveredItem === i ? ACCENT : TEXT_MUTED,
-                              border: `1px solid ${hoveredItem === i ? `${ACCENT}25` : BORDER}`,
-                            }}>
+                            style={{ background: hoveredAIItem === i ? `${ACCENT}15` : BG_LIGHTER, color: hoveredAIItem === i ? ACCENT : TEXT_MUTED, border: `1px solid ${hoveredAIItem === i ? `${ACCENT}25` : BORDER}` }}>
                             {item.icon}
                           </div>
-                          <span className="text-[12px] font-medium transition-colors duration-200"
-                            style={{ color: hoveredItem === i ? ACCENT : TEXT_PRIMARY }}>
-                            {item.name} {item.shortName}
-                          </span>
-                        </Link>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-[12px] font-medium leading-tight transition-colors duration-200" style={{ color: hoveredAIItem === i ? ACCENT : TEXT_PRIMARY }}>{item.name}</div>
+                            <div className="text-[10px] leading-tight mt-0.5 truncate" style={{ color: TEXT_MUTED, fontFamily: FONT_BODY }}>{item.description}</div>
+                          </div>
+                          {hoveredAIItem === i && <span className="ml-auto flex-shrink-0 text-[11px]" style={{ color: ACCENT }}>→</span>}
+                        </button>
                       ))}
                     </div>
                   </motion.div>
@@ -1386,104 +1370,129 @@ function SharedLayout() {
               </AnimatePresence>
             </li>
 
-            <li className="relative group cursor-pointer transition-colors duration-300"
-              style={{ color: TEXT_SEC }}
+            <li className="relative group cursor-pointer transition-colors duration-300" style={{ color: TEXT_SEC }}
               onMouseEnter={e => { e.currentTarget.style.color = TEXT_PRIMARY; }}
               onMouseLeave={e => { e.currentTarget.style.color = TEXT_SEC; }}>
-              <Link to="/ai-agents" style={{ color: 'inherit' }}>AI Agents</Link>
-              <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full"
-                style={{ background: ACCENT }} />
+              <Link to="/products" style={{ color: 'inherit' }}>{t.elv}</Link>
+              <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full" style={{ background: ACCENT }} />
             </li>
-            
-            <li className="relative group cursor-pointer transition-colors duration-300"
-              style={{ color: TEXT_SEC }}
+
+            <li className="relative group cursor-pointer transition-colors duration-300" style={{ color: TEXT_SEC }}
               onMouseEnter={e => { e.currentTarget.style.color = TEXT_PRIMARY; }}
               onMouseLeave={e => { e.currentTarget.style.color = TEXT_SEC; }}>
               <Link to="/contact" style={{ color: 'inherit' }}>{t.contact}</Link>
-              <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full"
-                style={{ background: ACCENT }} />
+              <span className="absolute -bottom-0.5 left-0 w-0 h-[2px] group-hover:w-full transition-all duration-300 rounded-full" style={{ background: ACCENT }} />
             </li>
-          </ul>         
+          </ul>
 
+          {/* Language button — desktop */}
           <div className="hidden md:block language-dropdown-container">
             <div className="relative">
               <button onClick={() => setShowLangDropdown(!showLangDropdown)}
-                className="text-sm font-semibold transition-all duration-300 px-4 py-1.5 rounded-full"
+                className="text-sm font-semibold transition-all duration-300 px-3 py-1.5 rounded-full flex items-center gap-2"
                 style={{ fontFamily: FONT_NAV, color: ACCENT, background: `${ACCENT}10`, border: `1.5px solid ${ACCENT}30` }}
                 onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = ACCENT; }}
                 onMouseLeave={e => { e.currentTarget.style.background = `${ACCENT}10`; e.currentTarget.style.color = ACCENT; e.currentTarget.style.borderColor = `${ACCENT}30`; }}>
-                Language
+                {isArabic ? <SaudiFlagProper /> : <UKFlag />}
+                <span>Language</span>
               </button>
               <AnimatePresence>
                 {showLangDropdown && (
-                  <motion.div initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.95 }} transition={{ duration: 0.18 }}
-                    className="absolute top-full right-0 mt-2 w-40 rounded-xl shadow-xl overflow-hidden"
+                  <motion.div initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.95 }} transition={{ duration: 0.18 }}
+                    className="absolute top-full right-0 mt-2 w-48 rounded-xl shadow-xl overflow-hidden"
                     style={{ background: BG_WHITE, border: `1px solid ${BORDER}`, boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}>
-                    {[{ code: 'en', label: 'English' }, { code: 'ar', label: 'Arabic' }].map((opt) => (
-                      <button key={opt.code} onClick={() => { setIsArabic(opt.code === 'ar'); setShowLangDropdown(false); }}
-                        className="w-full px-5 py-3 text-center text-sm font-medium transition-all duration-200"
-                        style={{ fontFamily: FONT_NAV, color: (opt.code === 'en') === !isArabic ? ACCENT : TEXT_SEC, background: (opt.code === 'en') === !isArabic ? `${ACCENT}0D` : 'transparent' }}
-                        onMouseEnter={e => { e.currentTarget.style.background = BG_LIGHT; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = (opt.code === 'en') === !isArabic ? `${ACCENT}0D` : 'transparent'; }}>
-                        {opt.label}
-                      </button>
-                    ))}
+                    {[
+                      { code: 'en', label: 'English', Flag: UKFlag },
+                      { code: 'ar', label: 'Arabic', Flag: SaudiFlagProper },
+                    ].map((opt) => {
+                      const isSelected = (opt.code === 'en') === !isArabic;
+                      return (
+                        <button key={opt.code} onClick={() => { setIsArabic(opt.code === 'ar'); setShowLangDropdown(false); }}
+                          className="w-full px-4 py-3 flex items-center gap-3 text-sm font-medium transition-all duration-200"
+                          style={{ fontFamily: FONT_NAV, color: isSelected ? ACCENT : TEXT_SEC, background: isSelected ? `${ACCENT}0D` : 'transparent', borderBottom: '1px solid #f0f0f0' }}
+                          onMouseEnter={e => { e.currentTarget.style.background = BG_LIGHT; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = isSelected ? `${ACCENT}0D` : 'transparent'; }}>
+                          <opt.Flag />
+                          <span>{opt.label}</span>
+                          {isSelected && (
+                            <svg viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2.5" width="14" height="14" className="ml-auto">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          )}
+                        </button>
+                      );
+                    })}
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
           </div>
 
-          <button className="md:hidden text-xl" style={{ color: TEXT_PRIMARY }} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {/* Mobile hamburger */}
+          <button className="md:hidden text-2xl" style={{ color: TEXT_PRIMARY }} onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? '✕' : '☰'}
           </button>
         </div>
 
+        {/* Mobile menu */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
               style={{ background: BG_WHITE, borderTop: `1px solid ${BORDER}` }} className="md:hidden overflow-hidden">
-              <div className="px-5 py-5 flex flex-col gap-4">
-                <Link to="/" className="text-sm font-medium transition-colors py-1" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }} onClick={() => setIsMenuOpen(false)}>{t.home}</Link>
-                <Link to="/about" className="text-sm font-medium transition-colors py-1" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }} onClick={() => setIsMenuOpen(false)}>{t.about}</Link>
+              <div className="px-5 py-5 flex flex-col gap-4 max-h-[80vh] overflow-y-auto">
+                <Link to="/" className="text-sm font-medium transition-colors py-2" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }} onClick={() => setIsMenuOpen(false)}>{t.home}</Link>
+                <Link to="/about" className="text-sm font-medium transition-colors py-2" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }} onClick={() => setIsMenuOpen(false)}>{t.about}</Link>
                 <div>
-                  <button type="button" className="text-sm font-medium transition-colors py-1 flex items-center justify-between w-full"
-                    style={{ fontFamily: FONT_NAV, color: TEXT_SEC, background: 'none', border: 'none', padding: '4px 0' }}
-                    onClick={() => setShowELVDropdown(prev => !prev)}>
-                    {t.elv}
+                  <button type="button" className="text-sm font-medium transition-colors py-2 flex items-center justify-between w-full"
+                    style={{ fontFamily: FONT_NAV, color: TEXT_SEC, background: 'none', border: 'none', padding: '8px 0' }}
+                    onClick={() => setShowMobileAIDropdown(prev => !prev)}>
+                    {t.aiAgents}
                     <motion.svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"
-                      animate={{ rotate: showELVDropdown ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                      animate={{ rotate: showMobileAIDropdown ? 180 : 0 }} transition={{ duration: 0.25 }}>
                       <polyline points="6 9 12 15 18 9" />
                     </motion.svg>
                   </button>
                   <AnimatePresence>
-                    {showELVDropdown && (
-                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }} className="overflow-hidden ml-3 mt-1">
-                        {ELV_DROPDOWN_ITEMS.map((item, i) => (
-                          <Link key={i} to={`/product/${item.productId}`} className="flex items-center gap-2 py-2 text-[12px] font-medium"
-                            style={{ fontFamily: FONT_NAV, color: TEXT_SEC }}
-                            onClick={() => { setIsMenuOpen(false); setShowELVDropdown(false); }}>
-                            <span style={{ color: ACCENT, opacity: 0.7 }}>›</span>
-                            {item.name} {item.shortName}
-                          </Link>
+                    {showMobileAIDropdown && (
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden ml-1 mt-1">
+                        {AI_AGENTS_DROPDOWN_ITEMS.map((item, i) => (
+                          <button key={i} onClick={() => handleAIAgentSelect(item.solutionId)}
+                            className="flex items-center gap-2.5 py-3 px-2 w-full text-left border-b border-gray-100 last:border-0"
+                            style={{ fontFamily: FONT_NAV, background: 'none', border: 'none', borderBottom: '1px solid #f0f0f0', cursor: 'pointer' }}>
+                            <div className="flex-shrink-0 w-6 h-6 rounded-md flex items-center justify-center" style={{ background: BG_LIGHTER, color: TEXT_MUTED, border: `1px solid ${BORDER}` }}>
+                              {item.icon}
+                            </div>
+                            <div>
+                              <div className="text-[12px] font-medium" style={{ color: TEXT_PRIMARY }}>{item.name}</div>
+                              <div className="text-[10px]" style={{ color: TEXT_MUTED }}>{item.description}</div>
+                            </div>
+                          </button>
                         ))}
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
-                <Link to="/ai-agents" className="text-sm font-medium transition-colors py-1" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }} onClick={() => setIsMenuOpen(false)}>AI Agents</Link>
-               
-                <Link to="/contact" className="text-sm font-medium transition-colors py-1" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }} onClick={() => setIsMenuOpen(false)}>{t.contact}</Link>
-                <div className="flex gap-2 pt-1">
-                  {[{ code: 'en', label: 'English' }, { code: 'ar', label: 'Arabic' }].map((opt) => (
-                    <button key={opt.code} onClick={() => { setIsArabic(opt.code === 'ar'); setIsMenuOpen(false); }}
-                      className="flex-1 py-2 rounded-lg text-xs font-semibold transition-colors text-center"
-                      style={{ fontFamily: FONT_NAV, background: (opt.code === 'en') === !isArabic ? ACCENT : BG_LIGHT, color: (opt.code === 'en') === !isArabic ? '#fff' : TEXT_SEC }}>
-                      {opt.label}
-                    </button>
-                  ))}
+                <Link to="/products" className="text-sm font-medium transition-colors py-2" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }} onClick={() => setIsMenuOpen(false)}>{t.elv}</Link>
+                <Link to="/contact" className="text-sm font-medium transition-colors py-2" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }} onClick={() => setIsMenuOpen(false)}>{t.contact}</Link>
+
+                <div className="pt-2 mt-2 border-t border-gray-100">
+                  <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>Language</p>
+                  <div className="flex gap-2">
+                    {[
+                      { code: 'en', label: 'English', Flag: UKFlag },
+                      { code: 'ar', label: 'Arabic', Flag: SaudiFlagProper },
+                    ].map((opt) => {
+                      const isSelected = (opt.code === 'en') === !isArabic;
+                      return (
+                        <button key={opt.code} onClick={() => { setIsArabic(opt.code === 'ar'); setIsMenuOpen(false); }}
+                          className="flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-2"
+                          style={{ fontFamily: FONT_NAV, background: isSelected ? ACCENT : BG_LIGHT, color: isSelected ? '#fff' : TEXT_SEC, border: `1px solid ${isSelected ? ACCENT : BORDER}` }}>
+                          <opt.Flag />
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -1492,99 +1501,49 @@ function SharedLayout() {
       </motion.nav>
 
       <Outlet />
-
       <Footer />
 
-      {/* ─── WHATSAPP FAB BUTTON — MOVED LOWER ─── */}
-      <motion.button 
-        onClick={() => setShowWhatsApp(!showWhatsApp)} 
-        whileHover={{ scale: 1.12 }} 
-        whileTap={{ scale: 0.95 }}
+      {/* WhatsApp FAB */}
+      <motion.button onClick={() => setShowWhatsApp(!showWhatsApp)} whileHover={{ scale: 1.12 }} whileTap={{ scale: 0.95 }}
         className="fixed z-50 p-3.5 rounded-full shadow-xl transition-all duration-300"
-        style={{
-          bottom: '2.5rem',
-          right: '1.5rem',
-          background: '#25D366',
-          boxShadow: '0 8px 24px rgba(37,211,102,0.40)',
-          border: '2px solid rgba(255,255,255,0.3)',
-        }}
+        style={{ bottom: '2.5rem', right: '1.5rem', background: '#25D366', boxShadow: '0 8px 24px rgba(37,211,102,0.40)', border: '2px solid rgba(255,255,255,0.3)' }}
         aria-label="Chat on WhatsApp">
         <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
-        
-        {/* Subtle pulse animation ring */}
         <span className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ background: '#25D366' }} />
       </motion.button>
 
-      {/* ─── WHATSAPP POPUP — POSITIONED ABOVE THE BUTTON ─── */}
       <AnimatePresence>
         {showWhatsApp && (
           <>
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.88 }} 
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.88 }} 
+            <motion.div initial={{ opacity: 0, y: 20, scale: 0.88 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.88 }}
               transition={{ type: 'spring', stiffness: 320, damping: 26 }}
               className="fixed z-50 w-64 rounded-2xl shadow-2xl overflow-hidden"
-              style={{
-                bottom: '7.5rem',
-                right: '1.5rem',
-                background: BG_WHITE,
-                border: `1px solid ${BORDER}`,
-                boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
-              }}>
-              
-              {/* Header */}
+              style={{ bottom: '7.5rem', right: '1.5rem', background: BG_WHITE, border: `1px solid ${BORDER}`, boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
               <div className="bg-gradient-to-r from-[#075E54] to-[#128C7E] px-5 py-4">
-                <h3 className="text-white text-[13px] font-bold" style={{ fontFamily: FONT_HEADING }}>
-                  {t.wpHeader}
-                </h3>
-                <p className="text-white/80 text-[10px] mt-1" style={{ fontFamily: FONT_BODY }}>
-                  {t.wpSub}
-                </p>
+                <h3 className="text-white text-[13px] font-bold" style={{ fontFamily: FONT_HEADING }}>{t.wpHeader}</h3>
+                <p className="text-white/80 text-[10px] mt-1" style={{ fontFamily: FONT_BODY }}>{t.wpSub}</p>
               </div>
-              
-              {/* Chat button */}
               <div className="p-4 bg-white">
-                <a 
-                  href="https://wa.me/966535141447" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:bg-gray-50 border border-gray-100"
                   style={{ textDecoration: 'none' }}>
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#25D366]/10 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="#25D366" width="20" height="20">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="#25D366" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-[12px]" style={{ fontFamily: FONT_BODY, color: TEXT_PRIMARY }}>
-                      {t.wpCta}
-                    </div>
-                    <div className="text-[10px] mt-0.5 font-medium" style={{ color: '#25D366', fontFamily: FONT_NAV }}>
-                      Chat Now →
-                    </div>
+                    <div className="font-semibold text-[12px]" style={{ fontFamily: FONT_BODY, color: TEXT_PRIMARY }}>{t.wpCta}</div>
+                    <div className="text-[10px] mt-0.5 font-medium" style={{ color: '#25D366', fontFamily: FONT_NAV }}>Chat Now →</div>
                   </div>
                 </a>
               </div>
-              
-              {/* Close button */}
-              <button 
-                onClick={() => setShowWhatsApp(false)}
+              <button onClick={() => setShowWhatsApp(false)}
                 className="absolute top-3 right-3 w-5 h-5 rounded-full flex items-center justify-center text-white text-xs font-bold hover:bg-white/20 transition-colors"
-                style={{ background: 'rgba(0,0,0,0.2)' }}
-                aria-label="Close">
-                ×
-              </button>
+                style={{ background: 'rgba(0,0,0,0.2)' }} aria-label="Close">×</button>
             </motion.div>
-            
-            {/* Backdrop */}
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/10 backdrop-blur-sm" 
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 bg-black/10 backdrop-blur-sm"
               onClick={() => setShowWhatsApp(false)} />
           </>
         )}
@@ -1609,9 +1568,7 @@ function HomePage() {
 
   useEffect(() => {
     const nav = document.querySelector('nav');
-    if (nav) {
-      setNavHeight(nav.offsetHeight);
-    }
+    if (nav) setNavHeight(nav.offsetHeight);
   }, []);
 
   useEffect(() => {
@@ -1640,66 +1597,12 @@ function HomePage() {
   }, []);
 
   const services = [
-    {
-      id: 1,
-      number: '01',
-      title: 'Enterprise Resource Planning',
-      slug: 'erp',
-      shortDesc: 'Comprehensive management of Finance, HR, Inventory, Sales, and Manufacturing.',
-      features: ['Finance Management','HR Automation','Inventory Control','Sales Integration'],
-      bgImage: erpBg,
-      tag: 'ERP'
-    },
-    {
-      id: 2,
-      number: '02',
-      title: 'Customer Relationship Management',
-      slug: 'crm',
-      shortDesc: 'Intelligent tools for lead management, pipeline tracking, and customer engagement.',
-      features: ['Lead Management','Pipeline Tracking','Customer Analytics','Revenue Forecasting'],
-      bgImage: crmBg,
-      tag: 'CRM'
-    },
-    {
-      id: 3,
-      number: '03',
-      title: 'HR & Payroll Automation',
-      slug: 'hr',
-      shortDesc: 'Automated workforce management with AI-driven attendance and precise payroll processing.',
-      features: ['AI Attendance','Payroll Processing','Leave Management','Compliance Tracking'],
-      bgImage: hrPayrollBg,
-      tag: 'HCM'
-    },
-    {
-      id: 4,
-      number: '04',
-      title: 'Project & Construction ERP',
-      slug: 'construction',
-      shortDesc: 'Tailored modules for contractors to manage budgets, resources, and timelines.',
-      features: ['Budget Management','Resource Allocation','Progress Tracking','Timeline Control'],
-      bgImage: projectConstructionBg,
-      tag: 'PMO'
-    },
-    {
-      id: 5,
-      number: '05',
-      title: 'AI & Business Analytics',
-      slug: 'ai-and-analytics',
-      shortDesc: 'Data-driven dashboards and predictive insights across all business functions.',
-      features: ['Predictive Analytics','Interactive Dashboards','Machine Learning','Risk Assessment'],
-      bgImage: aiAnalyticsBg,
-      tag: 'AI'
-    },
-    {
-      id: 6,
-      number: '06',
-      title: 'E-Invoicing & Compliance',
-      slug: 'e-invoicing',
-      shortDesc: 'Seamless ZATCA-compliant e-invoicing integration with external devices.',
-      features: ['ZATCA Compliance','Invoice Automation','Tax Reporting','Device Integration'],
-      bgImage: einvoiceBg,
-      tag: 'ZATCA'
-    },
+    { id: 1, number: '01', title: 'Enterprise Resource Planning', slug: 'erp', shortDesc: 'Comprehensive management of Finance, HR, Inventory, Sales, and Manufacturing.', features: ['Finance Management','HR Automation','Inventory Control','Sales Integration'], bgImage: erpBg, tag: 'ERP' },
+    { id: 2, number: '02', title: 'Customer Relationship Management', slug: 'crm', shortDesc: 'Intelligent tools for lead management, pipeline tracking, and customer engagement.', features: ['Lead Management','Pipeline Tracking','Customer Analytics','Revenue Forecasting'], bgImage: crmBg, tag: 'CRM' },
+    { id: 3, number: '03', title: 'HR & Payroll Automation', slug: 'hr', shortDesc: 'Automated workforce management with AI-driven attendance and precise payroll processing.', features: ['AI Attendance','Payroll Processing','Leave Management','Compliance Tracking'], bgImage: hrPayrollBg, tag: 'HCM' },
+    { id: 4, number: '04', title: 'Project & Construction ERP', slug: 'construction', shortDesc: 'Tailored modules for contractors to manage budgets, resources, and timelines.', features: ['Budget Management','Resource Allocation','Progress Tracking','Timeline Control'], bgImage: projectConstructionBg, tag: 'PMO' },
+    { id: 5, number: '05', title: 'AI & Business Analytics', slug: 'ai-and-analytics', shortDesc: 'Data-driven dashboards and predictive insights across all business functions.', features: ['Predictive Analytics','Interactive Dashboards','Machine Learning','Risk Assessment'], bgImage: aiAnalyticsBg, tag: 'AI' },
+    { id: 6, number: '06', title: 'E-Invoicing & Compliance', slug: 'e-invoicing', shortDesc: 'Seamless ZATCA-compliant e-invoicing integration with external devices.', features: ['ZATCA Compliance','Invoice Automation','Tax Reporting','Device Integration'], bgImage: einvoiceBg, tag: 'ZATCA' },
   ];
 
   const [activeSvc, setActiveSvc] = useState(0);
@@ -1709,19 +1612,14 @@ function HomePage() {
 
   const goToSvc = (idx) => {
     if (svcAnimating || idx === activeSvc) return;
-    setSvcAnimating(true);
-    setPrevSvc(activeSvc);
-    setActiveSvc(idx);
+    setSvcAnimating(true); setPrevSvc(activeSvc); setActiveSvc(idx);
     setTimeout(() => { setPrevSvc(null); setSvcAnimating(false); }, 800);
   };
 
   useEffect(() => {
     svcAutoRef.current = setInterval(() => {
       setSvcAnimating(true);
-      setActiveSvc(p => {
-        setPrevSvc(p);
-        return (p + 1) % services.length;
-      });
+      setActiveSvc(p => { setPrevSvc(p); return (p + 1) % services.length; });
       setTimeout(() => { setPrevSvc(null); setSvcAnimating(false); }, 800);
     }, 7000);
     return () => clearInterval(svcAutoRef.current);
@@ -1731,10 +1629,7 @@ function HomePage() {
     clearInterval(svcAutoRef.current);
     svcAutoRef.current = setInterval(() => {
       setSvcAnimating(true);
-      setActiveSvc(p => {
-        setPrevSvc(p);
-        return (p + 1) % services.length;
-      });
+      setActiveSvc(p => { setPrevSvc(p); return (p + 1) % services.length; });
       setTimeout(() => { setPrevSvc(null); setSvcAnimating(false); }, 800);
     }, 7000);
   };
@@ -1746,41 +1641,45 @@ function HomePage() {
 
   return (
     <div ref={mainRef} style={{ fontFamily: FONT_BODY }}>
-      {/* ── HERO ── */}
-      <section ref={heroRef} className="relative flex items-center overflow-hidden" 
-        style={{ 
-          minHeight: '100vh', 
-          background: BG_WHITE,
-          paddingTop: `${navHeight}px`
-        }}>
+
+      {/* ─── HERO ─────────────────────────────────────────────────────────── */}
+      <section ref={heroRef} className="relative overflow-hidden"
+        style={{ minHeight: '100vh', background: BG_WHITE, paddingTop: `${navHeight}px` }}>
         <div className="absolute inset-0" style={{ top: `${navHeight}px` }}>
-        <img src={newBanner} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.70) 35%, rgba(255,255,255,0.30) 65%, rgba(255,255,255,0.05) 100%)' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(255,255,255,0.50) 0%, transparent 45%)' }} />
+          <img src={newBanner} alt="" className="w-full h-full"
+            style={{ objectFit: 'cover', objectPosition: 'right center' }} />
+          <div className="absolute inset-0 md:hidden"
+            style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.80) 45%, rgba(255,255,255,0.25) 75%, rgba(255,255,255,0.05) 100%)' }} />
+          <div className="absolute inset-0 hidden md:block"
+            style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.70) 35%, rgba(255,255,255,0.30) 65%, rgba(255,255,255,0.05) 100%)' }} />
+          <div className="absolute inset-0"
+            style={{ background: 'linear-gradient(to top, rgba(255,255,255,0.50) 0%, transparent 45%)' }} />
         </div>
+
         <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full blur-3xl pointer-events-none" style={{ background: `${ACCENT}0A` }} />
         <div className="absolute bottom-1/4 right-1/5 w-56 h-56 rounded-full blur-3xl pointer-events-none" style={{ background: `${ACCENT3}08` }} />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full">
-          <div className="max-w-2xl">
-            <p className="hero-badge-text text-[11px] font-semibold tracking-[0.22em] uppercase mb-4" style={{ fontFamily: FONT_BADGE, color: ACCENT }}>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 w-full min-h-[calc(100vh-80px)] flex items-center">
+          <div className="max-w-xl">
+            <p className="hero-badge-text text-[10px] sm:text-[11px] font-semibold tracking-[0.22em] uppercase mb-3 sm:mb-4" style={{ fontFamily: FONT_BADGE, color: ACCENT }}>
               Saudi Arabia's Premier Tech Partner
             </p>
-            <h1 className="font-black mb-6" style={{ lineHeight: 1.15 }}>
-  {t.heroTitle.map((line, i) => (
-    <div key={i} className="overflow-visible" style={{ paddingBottom: '0.04em' }}>
-      <span className="hero-line block font-bold"
-        style={{ fontFamily: FONT_HERO, fontSize: 'clamp(1.8rem,4.2vw,3.2rem)', lineHeight: 1.12, color: i === 1 ? ACCENT : TEXT_PRIMARY, display: 'block' }}>
-        {line}
-      </span>
-    </div>
-  ))}
-</h1>
-            <p className="hero-desc text-sm md:text-[14px] leading-relaxed mb-8 max-w-md font-light" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>
+            <h1 className="font-black mb-4 sm:mb-6" style={{ lineHeight: 1.15 }}>
+              {t.heroTitle.map((line, i) => (
+                <div key={i} className="overflow-visible" style={{ paddingBottom: '0.04em' }}>
+                  <span className="hero-line block font-bold"
+                    style={{ fontFamily: FONT_HERO, fontSize: 'clamp(1.6rem,4.2vw,3.2rem)', lineHeight: 1.12, color: i === 1 ? ACCENT : TEXT_PRIMARY, display: 'block' }}>
+                    {line}
+                  </span>
+                </div>
+              ))}
+            </h1>
+            <p className="hero-desc text-[12px] sm:text-[14px] leading-relaxed mb-6 sm:mb-8 max-w-md font-light" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>
               {t.heroDesc}
             </p>
             <div className="flex flex-wrap items-center gap-4 mb-0">
               <MagneticButton to="/contact" className="hero-btn group flex items-center gap-3 text-sm font-medium transition-colors duration-300" style={{ fontFamily: FONT_NAV, color: TEXT_SEC }}>
-                <span className="w-9 h-9 rounded-full border flex items-center justify-center transition-all text-base" style={{ borderColor: BORDER }}>→</span>
+                <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border flex items-center justify-center transition-all text-base" style={{ borderColor: BORDER }}>→</span>
                 {t.explore}
               </MagneticButton>
             </div>
@@ -1788,24 +1687,28 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ── MARQUEE ── */}
-      <div className="py-3.5 overflow-hidden" style={{ background: BG_LIGHTER, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}` }}>
+      {/* ─── MARQUEE ──────────────────────────────────────────────────────── */}
+      <div className="py-3 sm:py-3.5 overflow-hidden" style={{ background: BG_LIGHTER, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}` }}>
         <Marquee items={marqueeItems} />
       </div>
 
-      {/* ── SERVICES ── */}
+      {/* ─── ENTERPRISE SOLUTIONS ─────────────────────────────────────────── */}
       <section id="services-section" ref={svcSectionRef} className="relative overflow-hidden" style={{ background: BG_LIGHT }}>
         <div className="w-full h-px" style={{ background: BORDER }} />
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-16 pb-10">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-12 sm:pt-16 pb-8 sm:pb-10">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6">
             <div>
-              <h2 className="font-bold leading-[1.08]" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(2rem,4.5vw,3rem)', color: TEXT_PRIMARY }}>Enterprise<br /><span style={{ color: ACCENT }}>Solutions</span></h2>
+              <h2 className="font-bold leading-[1.08] whitespace-nowrap" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.6rem,4.5vw,3rem)', color: TEXT_PRIMARY }}>
+                Enterprise <span style={{ color: ACCENT }}>Solutions</span>
+              </h2>
             </div>
-            <p className="text-[12px] leading-relaxed max-w-[280px] md:text-right" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>Advanced digital ecosystems designed to optimize<br />operations and drive sustainable growth.</p>
+            <p className="text-[12px] leading-relaxed max-w-[280px] md:text-right" style={{ fontFamily: FONT_BODY, color: TEXT_MUTED }}>
+              Advanced digital ecosystems designed to optimize<br className="hidden sm:block" />operations and drive sustainable growth.
+            </p>
           </div>
         </div>
 
-        <div className="relative w-full overflow-hidden" style={{ height: 'clamp(460px, 66vh, 640px)' }}>
+        <div className="relative w-full overflow-hidden" style={{ height: 'clamp(460px, 68vh, 640px)' }}>
           <AnimatePresence>
             {prevSvc !== null && (
               <motion.div key={`svc-bg-prev-${prevSvc}`} className="absolute inset-0" initial={{ opacity: 1 }} animate={{ opacity: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.7, ease: 'easeInOut' }}>
@@ -1821,11 +1724,11 @@ function HomePage() {
           <div className="absolute inset-y-0 right-0 w-1/3 pointer-events-none" style={{ background: `radial-gradient(ellipse at right center, ${ACCENT}10 0%, transparent 70%)` }} />
 
           <div className="absolute inset-0 flex items-center">
-            <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full">
-              <div className="grid lg:grid-cols-[1fr_400px] gap-12 items-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 w-full">
+              <div className="grid lg:grid-cols-[1fr_400px] gap-8 lg:gap-12 items-center">
                 <AnimatePresence mode="wait">
                   <motion.div key={`svc-content-${activeSvc}`} initial={{ opacity: 0, x: -32 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 32 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
-                    <div className="flex items-center justify-between mb-5">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-4 sm:mb-5">
                       <div className="flex items-center gap-3">
                         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.28em]" style={{ background: `${ACCENT}15`, color: ACCENT, border: `1px solid ${ACCENT}30`, fontFamily: FONT_BADGE }}>
                           <span className="w-1.5 h-1.5 rounded-full" style={{ background: ACCENT }} />{svc.tag} · Service
@@ -1833,17 +1736,17 @@ function HomePage() {
                         <span className="text-[9px] font-medium" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>{String(activeSvc + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <button onClick={() => handleSvcGo((activeSvc - 1 + services.length) % services.length)} className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300" style={{ background: BG_WHITE, border: `1px solid ${BORDER}`, color: TEXT_SEC, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = ACCENT; }} onMouseLeave={e => { e.currentTarget.style.background = BG_WHITE; e.currentTarget.style.color = TEXT_SEC; e.currentTarget.style.borderColor = BORDER; }}>‹</button>
-                        <button onClick={() => handleSvcGo((activeSvc + 1) % services.length)} className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300" style={{ background: BG_WHITE, border: `1px solid ${BORDER}`, color: TEXT_SEC, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = ACCENT; }} onMouseLeave={e => { e.currentTarget.style.background = BG_WHITE; e.currentTarget.style.color = TEXT_SEC; e.currentTarget.style.borderColor = BORDER; }}>›</button>
+                        <button onClick={() => handleSvcGo((activeSvc - 1 + services.length) % services.length)} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300" style={{ background: BG_WHITE, border: `1px solid ${BORDER}`, color: TEXT_SEC, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = ACCENT; }} onMouseLeave={e => { e.currentTarget.style.background = BG_WHITE; e.currentTarget.style.color = TEXT_SEC; e.currentTarget.style.borderColor = BORDER; }}>‹</button>
+                        <button onClick={() => handleSvcGo((activeSvc + 1) % services.length)} className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-lg transition-all duration-300" style={{ background: BG_WHITE, border: `1px solid ${BORDER}`, color: TEXT_SEC, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} onMouseEnter={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = ACCENT; }} onMouseLeave={e => { e.currentTarget.style.background = BG_WHITE; e.currentTarget.style.color = TEXT_SEC; e.currentTarget.style.borderColor = BORDER; }}>›</button>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4 mb-4">
-                      <span className="text-[3rem] font-black leading-none" style={{ fontFamily: FONT_HEADING, color: `${ACCENT}25` }}>{svc.number}</span>
-                      <h3 className="font-bold leading-[1.1] pt-1" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.5rem,3vw,2.4rem)', color: TEXT_PRIMARY }}>{svc.title}</h3>
+                    <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                      <span className="text-[2.5rem] sm:text-[3rem] font-black leading-none" style={{ fontFamily: FONT_HEADING, color: `${ACCENT}25` }}>{svc.number}</span>
+                      <h3 className="font-bold leading-[1.1] pt-1" style={{ fontFamily: FONT_HEADING, fontSize: 'clamp(1.1rem,3vw,2.4rem)', color: TEXT_PRIMARY }}>{svc.title}</h3>
                     </div>
-                    <motion.div className="h-[2px] mb-5 rounded-full" style={{ background: `linear-gradient(to right, ${ACCENT}, transparent)` }} initial={{ width: 0 }} animate={{ width: '40%' }} transition={{ duration: 0.7, delay: 0.2 }} />
-                    <p className="text-[13px] leading-relaxed max-w-lg mb-6" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>{svc.shortDesc}</p>
-                    <Link to={`/services/${svc.slug}`} className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full font-bold text-white text-[11px] transition-all duration-300" style={{ background: ACCENT, fontFamily: FONT_NAV, boxShadow: `0 6px 20px ${ACCENT}35` }} onMouseEnter={e => { e.currentTarget.style.background = ACCENT2; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.transform = 'none'; }}>View More <span>→</span></Link>
+                    <motion.div className="h-[2px] mb-4 sm:mb-5 rounded-full" style={{ background: `linear-gradient(to right, ${ACCENT}, transparent)` }} initial={{ width: 0 }} animate={{ width: '40%' }} transition={{ duration: 0.7, delay: 0.2 }} />
+                    <p className="text-[11px] sm:text-[13px] leading-relaxed max-w-lg mb-5 sm:mb-6" style={{ fontFamily: FONT_BODY, color: TEXT_SEC }}>{svc.shortDesc}</p>
+                    <Link to={`/services/${svc.slug}`} className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-white text-[11px] transition-all duration-300" style={{ background: ACCENT, fontFamily: FONT_NAV, boxShadow: `0 6px 20px ${ACCENT}35` }} onMouseEnter={e => { e.currentTarget.style.background = ACCENT2; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.transform = 'none'; }}>View More <span>→</span></Link>
                   </motion.div>
                 </AnimatePresence>
                 <AnimatePresence mode="wait">
@@ -1864,7 +1767,6 @@ function HomePage() {
                         <div className="flex flex-wrap gap-1.5 justify-center">
                           {['ZATCA Ready', 'Cloud Native', 'KSA Compliant'].map((item, ii) => (<span key={ii} className="text-[9px] px-2.5 py-1 rounded-full font-semibold" style={{ background: ACCENT_SOFT, color: ACCENT, border: `1px solid ${ACCENT}20`, fontFamily: FONT_BODY }}>{item}</span>))}
                         </div>
-                        <p className="text-center text-[9px] mt-3" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>Powered by Aioon Technologies · KSA</p>
                       </div>
                     </div>
                   </motion.div>
@@ -1872,39 +1774,52 @@ function HomePage() {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
             {services.map((_, i) => (<button key={i} onClick={() => handleSvcGo(i)} style={{ width: i === activeSvc ? 20 : 6, height: 6, borderRadius: 99, border: 'none', padding: 0, cursor: 'pointer', background: i === activeSvc ? ACCENT : BORDER, transition: 'all 0.38s cubic-bezier(0.22,1,0.36,1)' }} />))}
           </div>
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="flex flex-wrap items-center justify-between gap-4 py-5" style={{ borderTop: `1px solid ${BORDER}` }}>
-            {[['06','Core Solutions'],['100+','Industries'],['500+','Projects'],['KSA','Exclusive Partner']].map(([val, label], i) => (<div key={i} className="flex items-center gap-3 cursor-default"><span className="text-xl font-bold" style={{ fontFamily: FONT_HEADING, color: ACCENT }}>{val}</span><span className="text-[9px] uppercase tracking-widest font-semibold" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>{label}</span>{i < 3 && <span className="hidden sm:block w-px h-4 ml-2" style={{ background: BORDER }} />}</div>))}
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
+          <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 py-4 sm:py-5" style={{ borderTop: `1px solid ${BORDER}` }}>
+            {[['06','Core Solutions'],['100+','Industries'],['500+','Projects'],['KSA','Exclusive Partner']].map(([val, label], i) => (
+              <div key={i} className="flex items-center gap-2 sm:gap-3 cursor-default">
+                <span className="text-base sm:text-xl font-bold" style={{ fontFamily: FONT_HEADING, color: ACCENT }}>{val}</span>
+                <span className="text-[8px] sm:text-[9px] uppercase tracking-widest font-semibold" style={{ fontFamily: FONT_BADGE, color: TEXT_MUTED }}>{label}</span>
+                {i < 3 && <span className="hidden sm:block w-px h-4 ml-2" style={{ background: BORDER }} />}
+              </div>
+            ))}
           </div>
         </div>
         <div className="w-full h-px" style={{ background: BORDER }} />
       </section>
 
-      {/* ── AI-AGENT SOLUTIONS ── */}
       <AiAgentSolutions />
-
-      {/* ── WHY CHOOSE US ── */}
       <WhyChooseUs />
 
-      {/* ── CONTACT CTA ── */}
-      <section id="contact-section" className="py-12 md:py-16 relative overflow-hidden" style={{ background: BG_DARK }}>
+      {/* ─── CTA SECTION ──────────────────────────────────────────────────── */}
+      <section id="contact-section" className="py-10 sm:py-12 md:py-16 relative overflow-hidden" style={{ background: BG_DARK }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] rounded-full blur-3xl opacity-20 pointer-events-none" style={{ background: ACCENT }} />
-        <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="grid md:grid-cols-[1fr_1.6fr] gap-10 items-center">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 lg:px-12">
+          <div className="grid md:grid-cols-[1fr_1.6fr] gap-8 sm:gap-10 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-4" style={{ fontFamily: FONT_HEADING }}>Ready for Digital<br /><span style={{ color: ACCENT3 }}>Transformation?</span></h2>
-              <p className="text-[12px] leading-relaxed mb-6 max-w-xs" style={{ fontFamily: FONT_BODY, color: 'rgba(255,255,255,0.55)' }}>Our team is ready to guide you from discovery to deployment.</p>
-              <MagneticButton to="/contact" className="inline-flex items-center gap-2.5 font-semibold px-6 py-3 rounded-full text-xs transition-all duration-300" style={{ fontFamily: FONT_NAV, background: ACCENT, color: '#fff', boxShadow: `0 6px 20px ${ACCENT}40` }}>Contact us <span>→</span></MagneticButton>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-tight mb-3 sm:mb-4" style={{ fontFamily: FONT_HEADING }}>Ready for Digital<br /><span style={{ color: ACCENT3 }}>Transformation?</span></h2>
+              <p className="text-[12px] leading-relaxed mb-5 sm:mb-6 max-w-xs" style={{ fontFamily: FONT_BODY, color: 'rgba(255,255,255,0.55)' }}>Our team is ready to guide you from discovery to deployment.</p>
+              <MagneticButton to="/contact" className="inline-flex items-center gap-2.5 font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs transition-all duration-300" style={{ fontFamily: FONT_NAV, background: ACCENT, color: '#fff', boxShadow: `0 6px 20px ${ACCENT}40` }}>Contact us <span>→</span></MagneticButton>
             </motion.div>
             <motion.div className="grid grid-cols-3 rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.10)', background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(8px)' }} initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-              {[{ icon: '✉', label: 'Email', text: 'info@aioon.com', href: 'mailto:info@aioon.com', sub: 'Write to us' }, { icon: '📞', label: 'Phone', text: '+966 535 141 447', href: 'tel:+966535141447', sub: 'Call anytime' }, { icon: '📍', label: 'Location', text: 'Riyadh, KSA', href: '#', sub: 'Saudi Arabia' }].map((item, i) => (
-                <motion.a key={i} href={item.href} className="flex flex-col justify-between p-4 group transition-colors duration-300" style={{ borderRight: i < 2 ? '1px solid rgba(255,255,255,0.10)' : 'none' }} onMouseEnter={e => { e.currentTarget.style.background = `${ACCENT}20`; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
-                  <div className="flex items-center justify-between mb-4"><span className="text-base">{item.icon}</span><span className="transition-colors text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>↗</span></div>
-                  <div><div className="text-[9px] font-bold uppercase tracking-widest mb-1" style={{ fontFamily: FONT_BADGE, color: 'rgba(255,255,255,0.35)' }}>{item.label}</div><div className="text-[11px] font-semibold mb-0.5 leading-tight text-white" style={{ fontFamily: FONT_BODY }}>{item.text}</div><div className="text-[9px]" style={{ fontFamily: FONT_BODY, color: 'rgba(255,255,255,0.30)' }}>{item.sub}</div></div>
+              {[
+                { icon: '✉', label: 'Email', text: 'info@aioon.sa', href: 'mailto:info@aioon.sa', sub: 'Write to us' },
+                { icon: '📞', label: 'Phone', text: '+966 535 141 447', href: 'tel:+966535141447', sub: 'Call anytime' },
+                { icon: '📍', label: 'Location', text: 'Riyadh, KSA', href: '#', sub: 'Saudi Arabia' },
+              ].map((item, i) => (
+                <motion.a key={i} href={item.href} className="flex flex-col justify-between p-3 sm:p-4 group transition-colors duration-300" style={{ borderRight: i < 2 ? '1px solid rgba(255,255,255,0.10)' : 'none' }} onMouseEnter={e => { e.currentTarget.style.background = `${ACCENT}20`; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
+                  <div className="flex items-center justify-between mb-2 sm:mb-4"><span className="text-sm sm:text-base">{item.icon}</span><span className="transition-colors text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>↗</span></div>
+                  <div>
+                    <div className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest mb-1" style={{ fontFamily: FONT_BADGE, color: 'rgba(255,255,255,0.35)' }}>{item.label}</div>
+                    <div className="text-[9px] sm:text-[11px] font-semibold mb-0.5 leading-tight text-white" style={{ fontFamily: FONT_BODY }}>{item.text}</div>
+                    <div className="text-[8px] sm:text-[9px]" style={{ fontFamily: FONT_BODY, color: 'rgba(255,255,255,0.30)' }}>{item.sub}</div>
+                  </div>
                   <div className="h-[2px] w-0 group-hover:w-full transition-all duration-400 mt-3 rounded-full" style={{ background: ACCENT }} />
                 </motion.a>
               ))}
@@ -1933,7 +1848,6 @@ export default function App() {
         <Route path="/services/ai-and-analytics" element={<AIAnalytics />} />
         <Route path="/services/e-invoicing"      element={<EInvoicing />} />
         <Route path="/contact"                   element={<Contact />} />
-        {/* ── Policy pages ── */}
         <Route path="/privacy-policy"            element={<PrivacyPolicyPage />} />
         <Route path="/terms-and-conditions"      element={<TermsAndConditionsPage />} />
         <Route path="/refund-policy"             element={<RefundPolicyPage />} />

@@ -1,19 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Users, ArrowUpRight } from "lucide-react";
 import { motion, useScroll, useMotionValue, useSpring, useTransform } from "framer-motion";
 import teamImage from "../assets/about.jpg";
-import missionImage from "../assets/mission1.jpg";
-import visionImage from "../assets/vision1.jpg";
-import valuesImage from "../assets/values1.jpg";
+import missionImage from "../assets/mission.jpg";
+import visionImage from "../assets/vision1.jpeg";
+import valuesImage from "../assets/values1.jpeg";
 import erpImg from "../assets/ERP.png";
 import crmImg from "../assets/CRM.png";
 import payrollImg from "../assets/HR.jpg";
-import projectImg from "../assets/construction.jpg";
+import projectImg from "../assets/construction.jpeg";
 import aiImg from "../assets/ai.png";
 import einvoiceImg from "../assets/Einvoiceandcompliance.webp";
 import { Link } from "react-router-dom";
-import heroBg from "../assets/about-bg.jpg";
-import enzappsLogo from "../assets/enzapps.jpeg";
+import AboutHero from "../components/AboutHero";
 
 // ─── TYPOGRAPHY ───────────────────────────────────────────────────────────────
 const FONT_HERO    = '""Inter"", ""Poppins"", "Space Grotesk", sans-serif';
@@ -72,7 +71,6 @@ function SectionLabel({ children, centered = false }) {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 function AboutUs() {
   const { scrollY } = useScroll();
-  const heroParallax = useTransform(scrollY, [0, 700], [0, 90]);
 
   const capabilities = [
     { title: "ERP",                        desc: "End-to-end enterprise resource planning to unify finance, inventory, procurement, and operations on a single platform.",  image: erpImg,      link: "/services/erp" },
@@ -96,82 +94,11 @@ function AboutUs() {
       {/* ══════════════════════════════════════════
           HERO
       ══════════════════════════════════════════ */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-     <img
-  src={heroBg}
-  alt="About background"
-  className="absolute inset-0 w-full h-full object-cover"
-  style={{ opacity: 1 }}
-/>
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
-
-        <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-5">
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }} 
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-5xl"
-          >
-           <motion.h1
-  className="font-bold mb-4"
-  style={{
-    fontFamily: '"Inter", sans-serif',
-    fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)',
-    lineHeight: 1.1,
-    letterSpacing: '0.01em',
-    fontWeight: 800,
-    color: '#FFFFFF',
-    textAlign: 'center'
-  }}
->
-  Digital Transformation <br />
-  <span style={{ opacity: 0.85 }}>
-    Redefined
-  </span>
-</motion.h1>
-            <motion.p
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: 0.15 }}
-  className="mx-auto"
-  style={{
-    marginTop: '14px',
-    maxWidth: '720px',
-    fontSize: 'clamp(0.95rem, 1.2vw, 1.1rem)',
-    lineHeight: 1.1,
-    color: 'rgba(255,255,255,0.75)',
-    fontFamily: FONT_BODY,
-  }}
->
-  Transforming complex business operations into seamless, 
-  intelligent systems powered by AI.
-</motion.p>
-            <motion.p
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: 0.2 }}
-  style={{
-    marginTop: '16px',
-    fontSize: '12px',
-    letterSpacing: '0.3em',
-    color: 'rgba(255,255,255,0.6)',
-    textTransform: 'uppercase',
-    fontFamily: FONT_BODY,
-  }}
->
-  POWERED BY ENZAPPS · MARKETED BY AIOON
-</motion.p>
-
-          </motion.div>
-        </div>
-
-      </section>
-
+      <AboutHero />
       {/* ══════════════════════════════════════════
           WHO WE ARE (NESTED BOXES - FULL WIDTH)
       ══════════════════════════════════════════ */}
-      <section className="relative pt-12 pb-12 overflow-hidden" style={{ background: BG_WHITE }}>
+      <section className="relative pt-8 pb-8 md:pt-12 md:pb-12 overflow-hidden" style={{ background: BG_WHITE }}>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Outer Box */}
@@ -205,7 +132,7 @@ function AboutUs() {
                     className="p-6 sm:p-8 rounded-[32px] border border-black/5 transition-all duration-300 hover:shadow-lg"
                     style={{ background: BG_WHITE }}
                   >
-                    <div className="flex gap-6 sm:gap-8 items-start">
+                    <div className="flex gap-4 md:gap-6 sm:gap-8 items-start">
                       <span className="text-sm font-bold opacity-30 mt-1" 
                         style={{ color: ACCENT, fontFamily: FONT_BADGE }}>{pillar.id}</span>
                       <div>
@@ -228,7 +155,7 @@ function AboutUs() {
         <div className="absolute -top-40 right-0 w-[60vw] h-[60vw] rounded-full pointer-events-none opacity-[0.03]"
           style={{ background: `radial-gradient(circle, ${ACCENT}, transparent 70%)` }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <motion.div className="mb-8"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7 }}>
@@ -259,7 +186,7 @@ function AboutUs() {
                   <div className="transform translate-y-2 group-hover:translate-y-0 transition-all duration-500">
                     <h3 className="font-bold leading-tight mb-2 text-white"
                       style={{ fontFamily: FONT_HEADING, fontSize: "1.75rem" }}>{p.title}</h3>
-                    <p className="text-[14px] leading-relaxed text-white/80" style={{ fontFamily: FONT_BODY }}>{p.body}</p>
+                    <p className="text-[13px] sm:text-[14px] leading-relaxed text-white/80" style={{ fontFamily: FONT_BODY }}>{p.body}</p>
                   </div>
                 </div>
               </motion.div>

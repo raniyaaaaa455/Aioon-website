@@ -98,7 +98,7 @@ function Contact() {
               </motion.span>
             ))}
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
             Have questions? We're here to help. Send us a message and we'll respond as soon as possible.
           </p>
         </motion.div>
@@ -300,7 +300,7 @@ function Contact() {
     </a>{" "}
     and{" "}
     <a href="/terms-and-conditions" className="text-white underline hover:text-blue-300 transition-colors duration-200">
-      Terms of Service
+      Terms & Conditions
     </a>.
     {" "}We'll never share your information with third parties.
   </p>
@@ -327,7 +327,7 @@ function Contact() {
                   <h3 className="text-lg font-semibold mb-1 text-white">Email Us</h3>
                   <a 
                     href="mailto:info@aioon.sa" 
-                    className="text-gray-300 hover:text-[#dc2626] transition-colors block"
+                    className="text-gray-300 hover:text-[#4277ff] transition-colors block"
                   >
                     info@aioon.sa
                   </a>
@@ -346,13 +346,13 @@ function Contact() {
                   <h3 className="text-lg font-semibold mb-1 text-white">Call Us</h3>
                   <a 
                     href="tel:+966535141447" 
-                    className="text-gray-300 hover:text-[#1B365D] transition-colors block"
+                    className="text-gray-300 hover:text-[#4277ff] transition-colors block"
                   >
                     +966 53 514 1447
                   </a>
                   <a 
                     href="tel:+966535090840" 
-                    className="text-gray-300 hover:text-[#1B365D] transition-colors block"
+                    className="text-gray-300 hover:text-[#4277ff] transition-colors block"
                   >
                     +966 53 509 0840
                   </a>
