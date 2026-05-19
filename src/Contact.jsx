@@ -4,7 +4,7 @@ import { FiMail, FiPhone, FiMapPin, FiSend, FiClock, FiBriefcase } from "react-i
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { motion } from "framer-motion";
 import contactBgImage from "./assets/contact.png";
-
+import { Link } from "react-router-dom";
 function Contact() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -24,7 +24,7 @@ function Contact() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/contact", {
+      const res = await fetch("https://aioon-website-production.up.railway.app/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
