@@ -293,17 +293,27 @@ function Contact() {
               </form>
 
               <div className="mt-8 pt-8 border-t border-white/20">
-  <p className="text-gray-300 text-sm text-center">
-    By submitting this form, you agree to our{" "}
-    <a href="/privacy-policy" className="text-white underline hover:text-blue-300 transition-colors duration-200">
-      Privacy Policy
-    </a>{" "}
-    and{" "}
-    <a href="/terms-and-conditions" className="text-white underline hover:text-blue-300 transition-colors duration-200">
-      Terms & Conditions
-    </a>.
-    {" "}We'll never share your information with third parties.
-  </p>
+<p className="text-gray-300 text-sm text-center">
+  By submitting this form, you agree to our{" "}
+
+  <Link
+    to="/privacy-policy"
+    className="text-white underline hover:text-blue-300 transition-colors duration-200"
+  >
+    Privacy Policy
+  </Link>
+
+  {" "}and{" "}
+
+  <Link
+    to="/terms-and-conditions"
+    className="text-white underline hover:text-blue-300 transition-colors duration-200"
+  >
+    Terms & Conditions
+  </Link>
+
+  . We'll never share your information with third parties.
+</p>
 </div>
             </motion.div>
           </div>
